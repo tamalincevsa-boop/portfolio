@@ -6,35 +6,109 @@
     <title>Твоё имя — Видеомонтажёр</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: system-ui, sans-serif; background: #0f0f0f; color: #f0f0f0; line-height: 1.6; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        h1 { font-size: 2.8rem; margin-bottom: 8px; }
+
+        /* Цветной заголовок с градиентом */
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            background: linear-gradient(135deg, #f6d365, #fda085, #f093fb, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite alternate;
+            margin-bottom: 10px;
+        }
+        @keyframes gradientShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+
         .sub { color: #aaa; font-size: 1.2rem; margin-bottom: 30px; }
         .about { margin-bottom: 50px; }
-        h2 { font-size: 2rem; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .video-card { background: #1a1a1a; border-radius: 10px; overflow: hidden; }
-        .video-card iframe { width: 100%; height: 200px; border: 0; }
-        .video-card p { padding: 10px; font-size: 0.95rem; color: #ccc; }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+        h2:hover { border-color: #f093fb; }
+
+        /* Карточки видео — с цветом и движением */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+            cursor: default;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(244, 147, 251, 0.2);
+            background: #222;
+        }
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+            border: 0;
+        }
+        .video-card p {
+            padding: 12px;
+            font-size: 0.95rem;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        .video-card:hover p { color: #fff; }
+
+        /* Анимация появления блоков при скролле */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .contacts { margin-top: 50px; }
-        .contacts a { color: #fff; }
-        footer { margin-top: 60px; text-align: center; color: #555; font-size: 0.9rem; }
+        .contacts a { color: #fda085; text-decoration: none; transition: color 0.3s; }
+        .contacts a:hover { color: #f093fb; }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Твоё Имя Фамилия</h1>
-        <p class="sub">Видеомонтажёр | Цветокоррекция | Motion-дизайн</p>
+        <div class="hero reveal">
+            <h1>Твоё Имя Фамилия</h1>
+            <p class="sub">Видеомонтажёр | Цветокоррекция | Motion-дизайн</p>
+        </div>
 
-        <div class="about">
+        <div class="about reveal">
             <p>Привет! Я занимаюсь монтажом рекламы, клипов и YouTube-контента. Здесь — примеры моих работ. Готов к проектам.</p>
         </div>
 
-        <h2>Мои работы</h2>
-        <div class="video-grid" id="videoGrid">
-            <!-- Плейсхолдеры, заменишь на свои embed-коды с Kinescope -->
+        <h2 class="reveal">Мои работы</h2>
+        <div class="video-grid reveal" id="videoGrid">
             <div class="video-card">
-                <!-- Kinescope: вместо этого iframe вставь свой embed-код -->
                 <iframe src="https://kinescope.io/embed/пример_id" allowfullscreen></iframe>
                 <p>Название проекта — роль в монтаже</p>
             </div>
@@ -48,13 +122,28 @@
             </div>
         </div>
 
-        <div class="contacts">
+        <div class="contacts reveal">
             <h2>Контакты</h2>
             <p>Email: <a href="mailto:tvoy@email.com">tvoy@email.com</a></p>
-            <p>Telegram: @твой_ник</p>
+            <p>Telegram: <a href="#">@твой_ник</a></p>
         </div>
 
         <footer>© 2026 Твоё Имя</footer>
     </div>
+
+    <!-- JavaScript для анимации появления -->
+    <script>
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
