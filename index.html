@@ -13,20 +13,75 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e, #0f0c29);
-            background-size: 400% 400%;
-            animation: gradientMove 12s ease infinite;
+            background: #08090f; /* запасной цвет, если фон не загрузится */
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            min-height: 100vh;
         }
 
-        /* Плавающая плашка */
+        /* ===== ФОН С ДВИЖУЩИМИСЯ ФИГУРАМИ ===== */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: #08090f;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: floatBlob 25s infinite alternate ease-in-out;
+        }
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at 30% 30%, #6c2a6a, #1f1140);
+            top: -10%;
+            left: -5%;
+            animation-duration: 28s;
+        }
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at 70% 60%, #2a4a6c, #0f1a2f);
+            bottom: -10%;
+            right: -8%;
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+        .blob-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle at 50% 40%, #4a2a6c, #150a20);
+            top: 50%;
+            left: 60%;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+        .blob-4 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at 60% 30%, #2a5a6c, #0a1720);
+            top: 20%;
+            left: 30%;
+            animation-duration: 26s;
+            animation-delay: -15s;
+        }
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(60px, -80px) scale(1.15); }
+            50% { transform: translate(-40px, 50px) scale(0.95); }
+            75% { transform: translate(-70px, -30px) scale(1.05); }
+            100% { transform: translate(30px, 60px) scale(1.1); }
+        }
+
+        /* ===== ПЛАВАЮЩАЯ ПЛАШКА ===== */
         header {
             position: sticky;
             top: 0;
@@ -55,7 +110,7 @@
         }
         nav a:hover { color: #fff; }
 
-        /* Hero */
+        /* ===== HERO ===== */
         .hero {
             display: flex;
             flex-direction: column;
@@ -127,7 +182,7 @@
             box-shadow: 0 8px 25px rgba(255,255,255,0.15);
         }
 
-        /* Секции */
+        /* ===== СЕКЦИИ ===== */
         .section {
             max-width: 1000px;
             margin: 0 auto;
@@ -146,6 +201,7 @@
             margin-bottom: 40px;
             letter-spacing: -0.5px;
         }
+
         /* Обо мне */
         .about-content {
             display: flex;
@@ -235,6 +291,14 @@
     </style>
 </head>
 <body>
+    <!-- Фоновые анимированные фигуры -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
     <!-- Навигация -->
     <header>
         <div class="logo">Semyon Tamalincev</div>
@@ -261,7 +325,6 @@
         <h2>Обо мне</h2>
         <div class="about-content">
             <div class="avatar">
-                <!-- Замени src на свою фотографию, сейчас просто градиентный круг -->
                 <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23f6d365'/%3E%3C/svg%3E" alt="аватар">
             </div>
             <div class="about-text">
