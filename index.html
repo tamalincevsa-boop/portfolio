@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semyon Tamalincev — Видеомонтаж</title>
     <style>
+        .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.review-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s;
+}
+.review-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
+}
+.review-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.review-card p {
+    padding: 14px;
+    font-size: 0.95rem;
+    color: #ccc;
+}
         :root {
             --accent: #f5a623;
             --accent2: #f093fb;
@@ -365,7 +392,20 @@
     <!-- Отзывы -->
     <section id="reviews" class="section">
         <h2>Отзывы</h2>
-        <div class="reviews-placeholder">Здесь будут скрины отзывов</div>
+        <div class="reviews-grid">
+    <div class="review-card">
+        <img src="название_файла1.jpg" alt="Отзыв 1">
+        <p>Комментарий клиента</p>
+    </div>
+    <div class="review-card">
+        <img src="название_файла2.jpg" alt="Отзыв 2">
+        <p>Комментарий клиента</p>
+    </div>
+    <div class="review-card">
+        <img src="название_файла3.jpg" alt="Отзыв 3">
+        <p>Комментарий клиента</p>
+    </div>
+</div>
     </section>
 
     <!-- Контакты -->
