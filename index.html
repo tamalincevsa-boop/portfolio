@@ -122,16 +122,12 @@
             position: relative;
         }
         .hero h1 {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 300;
             font-size: clamp(3rem, 10vw, 5.5rem);
-            font-weight: 700;
             letter-spacing: -2px;
             line-height: 1.1;
-            /* Новый холодный градиент */
-            background: linear-gradient(135deg, #b6c9ff, #7f9cff, #4b6bff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* Мягкая тень вместо яркого свечения */
-            text-shadow: 0 0 30px rgba(100, 140, 255, 0.4);
+            color: #ffffff;
             margin-bottom: 16px;
         }
         .subtitle {
@@ -180,19 +176,31 @@
             box-shadow: 0 8px 25px rgba(255,255,255,0.15);
         }
 
-        /* ===== СЕКЦИИ (анимация в обе стороны) ===== */
+        /* ===== СЕКЦИИ ===== */
         .section {
             max-width: 1000px;
             margin: 0 auto;
             padding: 100px 30px;
             opacity: 0;
-            transform: translateY(30px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        .section.visible {
+        /* Верхние секции — появляются сверху */
+        .section.from-top {
+            transform: translateY(-30px);
+        }
+        .section.from-top.visible {
             opacity: 1;
             transform: translateY(0);
         }
+        /* Нижние секции — появляются снизу */
+        .section:not(.from-top) {
+            transform: translateY(30px);
+        }
+        .section:not(.from-top).visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h2 {
             font-size: 2.5rem;
             font-weight: 600;
@@ -318,8 +326,8 @@
         </div>
     </section>
 
-    <!-- Обо мне -->
-    <section id="about" class="section">
+    <!-- Обо мне (появляется сверху) -->
+    <section id="about" class="section from-top">
         <h2>Обо мне</h2>
         <div class="about-content">
             <div class="avatar">
@@ -331,8 +339,8 @@
         </div>
     </section>
 
-    <!-- Работы -->
-    <section id="works" class="section">
+    <!-- Работы (появляется сверху) -->
+    <section id="works" class="section from-top">
         <h2>Мои работы</h2>
         <div class="video-grid">
             <div class="video-card">
@@ -350,13 +358,13 @@
         </div>
     </section>
 
-    <!-- Отзывы -->
+    <!-- Отзывы (появляется снизу) -->
     <section id="reviews" class="section">
         <h2>Отзывы</h2>
         <div class="reviews-placeholder">Здесь будут скрины отзывов</div>
     </section>
 
-    <!-- Контакты -->
+    <!-- Контакты (появляется снизу) -->
     <section id="contacts" class="section">
         <h2>Контакты</h2>
         <a href="http://t.me/Tamalincev" target="_blank" class="contact-link">
@@ -368,7 +376,7 @@
     <footer>© 2026 Semyon Tamalincev</footer>
 
     <script>
-        // Анимация появления и исчезновения при каждом скролле
+        // Анимация появления/исчезновения при скролле
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
