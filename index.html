@@ -5,33 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semyon Tamalincev — Видеомонтаж</title>
     <style>
-        .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-.review-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    overflow: hidden;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s;
-}
-.review-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
-}
-.review-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.review-card p {
-    padding: 14px;
-    font-size: 0.95rem;
-    color: #ccc;
-}
+        /* ===== НОВОЕ: ФОНОВАЯ СЕТКА + ВИНЬЕТКА ===== */
+        .bg-grid-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 0;            /* выше блобов (z-index: -1), ниже контента */
+            pointer-events: none;  /* не мешает кликам */
+            background:
+                /* Виньетка: прозрачный центр, тёмные края */
+                radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.25) 100%),
+                /* Горизонтальные линии сетки */
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
+                /* Вертикальные линии сетки */
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
+        }
+
+        /* Остальные стили (без изменений, перенесены для цельности) */
         :root {
             --accent: #f5a623;
             --accent2: #f093fb;
@@ -272,11 +261,10 @@
             transform: translateY(-6px);
             box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
         }
-        /* Обёртка плеера с сохранением пропорций 9:16 */
         .video-card .player-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 177.78%; /* 16/9 = 56.25%, для вертикального 9/16 = 177.78% */
+            padding-top: 177.78%;
         }
         .video-card .player-wrapper iframe {
             position: absolute;
@@ -293,6 +281,33 @@
         }
 
         /* Отзывы */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .review-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
+        }
+        .review-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .review-card p {
+            padding: 14px;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
         .reviews-placeholder {
             padding: 40px 0;
             text-align: center;
@@ -329,6 +344,9 @@
         <div class="blob blob-3"></div>
         <div class="blob blob-4"></div>
     </div>
+
+    <!-- НОВОЕ: Сетка + виньетка -->
+    <div class="bg-grid-vignette"></div>
 
     <!-- Навигация -->
     <header>
@@ -393,19 +411,19 @@
     <section id="reviews" class="section">
         <h2>Отзывы</h2>
         <div class="reviews-grid">
-    <div class="review-card">
-        <img src="111.jpg" alt="Отзыв 1">
-        <p>Сделал Андрею 6 reels которые набрали хорошее просмотры о чем он сам сказал в отзыве</p>
-    </div>
-    <div class="review-card">
-        <img src="2.jpg" alt="Отзыв 2">
-        <p>Алекс - специалист в области психологии, изменили подачу и стиль после чего видео стали попадать в рекомендации</p>
-    </div>
-    <div class="review-card">
-        <img src="3.jpg" alt="Отзыв 3">
-        <p> 4 месяца работали с Эриком, его аккаунт в тик токе и бизнес по продаже обежды заметно вырос за это время</p>
-    </div>
-</div>
+            <div class="review-card">
+                <img src="111.jpg" alt="Отзыв 1">
+                <p>Сделал Андрею 6 reels которые набрали хорошее просмотры о чем он сам сказал в отзыве</p>
+            </div>
+            <div class="review-card">
+                <img src="2.jpg" alt="Отзыв 2">
+                <p>Алекс - специалист в области психологии, изменили подачу и стиль после чего видео стали попадать в рекомендации</p>
+            </div>
+            <div class="review-card">
+                <img src="3.jpg" alt="Отзыв 3">
+                <p> 4 месяца работали с Эриком, его аккаунт в тик токе и бизнес по продаже обежды заметно вырос за это время</p>
+            </div>
+        </div>
     </section>
 
     <!-- Контакты -->
@@ -420,7 +438,6 @@
     <footer>© 2026 Semyon Tamalincev</footer>
 
     <script>
-        // Плавное появление только при скролле вниз
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
