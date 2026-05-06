@@ -122,9 +122,8 @@
             position: relative;
         }
         .hero h1 {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-weight: 300;
             font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 700;
             letter-spacing: -2px;
             line-height: 1.1;
             color: #ffffff;
@@ -176,31 +175,19 @@
             box-shadow: 0 8px 25px rgba(255,255,255,0.15);
         }
 
-        /* ===== СЕКЦИИ ===== */
+        /* ===== СЕКЦИИ (только появление снизу) ===== */
         .section {
             max-width: 1000px;
             margin: 0 auto;
             padding: 100px 30px;
             opacity: 0;
+            transform: translateY(30px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        /* Верхние секции — появляются сверху */
-        .section.from-top {
-            transform: translateY(-30px);
-        }
-        .section.from-top.visible {
+        .section.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        /* Нижние секции — появляются снизу */
-        .section:not(.from-top) {
-            transform: translateY(30px);
-        }
-        .section:not(.from-top).visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         h2 {
             font-size: 2.5rem;
             font-weight: 600;
@@ -326,8 +313,8 @@
         </div>
     </section>
 
-    <!-- Обо мне (появляется сверху) -->
-    <section id="about" class="section from-top">
+    <!-- Обо мне -->
+    <section id="about" class="section">
         <h2>Обо мне</h2>
         <div class="about-content">
             <div class="avatar">
@@ -339,8 +326,8 @@
         </div>
     </section>
 
-    <!-- Работы (появляется сверху) -->
-    <section id="works" class="section from-top">
+    <!-- Работы -->
+    <section id="works" class="section">
         <h2>Мои работы</h2>
         <div class="video-grid">
             <div class="video-card">
@@ -358,13 +345,13 @@
         </div>
     </section>
 
-    <!-- Отзывы (появляется снизу) -->
+    <!-- Отзывы -->
     <section id="reviews" class="section">
         <h2>Отзывы</h2>
         <div class="reviews-placeholder">Здесь будут скрины отзывов</div>
     </section>
 
-    <!-- Контакты (появляется снизу) -->
+    <!-- Контакты -->
     <section id="contacts" class="section">
         <h2>Контакты</h2>
         <a href="http://t.me/Tamalincev" target="_blank" class="contact-link">
@@ -376,15 +363,14 @@
     <footer>© 2026 Semyon Tamalincev</footer>
 
     <script>
-        // Анимация появления/исчезновения при скролле
+        // Плавное появление только при скролле вниз, без исчезновения
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
                 }
+                // не удаляем класс, чтобы секция оставалась видимой
             });
         }, { threshold: 0.15, rootMargin: "-30px" });
 
