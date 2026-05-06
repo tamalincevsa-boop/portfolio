@@ -112,7 +112,8 @@
             letter-spacing: -0.5px;
             color: #fff;
         }
-        nav a {
+        /* Десктопная навигация */
+        nav.desktop-nav a {
             color: #ccc;
             text-decoration: none;
             margin-left: 28px;
@@ -120,7 +121,63 @@
             font-weight: 500;
             transition: color 0.25s;
         }
-        nav a:hover { color: #fff; }
+        nav.desktop-nav a:hover { color: #fff; }
+
+        /* Бургер-иконка (показывается только на мобильных) */
+        .burger-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .burger-btn svg circle {
+            fill: currentColor;
+        }
+
+        /* ===== МОБИЛЬНОЕ МЕНЮ ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -280px;           /* спрятано за экраном */
+            width: 280px;
+            height: 100vh;
+            background: rgba(10, 10, 20, 0.9);
+            backdrop-filter: blur(25px);
+            z-index: 200;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 80px 30px 30px;
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            transition: color 0.25s;
+        }
+        .mobile-menu a:hover { color: #fff; }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s;
+        }
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         /* ===== HERO ===== */
         .hero {
@@ -340,9 +397,12 @@
             .logo {
                 font-size: 1.1rem;
             }
-            nav a {
-                margin-left: 16px;
-                font-size: 0.8rem;
+            /* Прячем десктопную навигацию, показываем бургер */
+            nav.desktop-nav {
+                display: none;
+            }
+            .burger-btn {
+                display: block;
             }
 
             /* Hero */
@@ -367,33 +427,50 @@
                 margin-bottom: 30px;
             }
 
-            /* Обо мне */
+            /* Обо мне – левое выравнивание, аватарка слева */
             .about-content {
-                flex-direction: column;
-                gap: 30px;
-                text-align: center;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: flex-start;
+                gap: 20px;
+                text-align: left;
             }
             .avatar {
-                width: 140px;
-                height: 140px;
-                margin: 0 auto;
+                width: 90px;
+                height: 90px;
+                margin: 0;
             }
             .about-text {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                text-align: left;
             }
 
-            /* Сетки видео и отзывов */
+            /* Сетки видео и отзывов – уменьшаем карточки */
             .video-grid {
+                max-width: 400px;
+                margin: 0 auto;
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
             .reviews-grid {
+                max-width: 400px;
+                margin: 0 auto;
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            .video-card {
+                border-radius: 16px;
+            }
+            .review-card {
+                border-radius: 16px;
+            }
             .video-card p,
             .review-card p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+                padding: 10px 14px;
+            }
+            .video-card .player-wrapper {
+                /* можно чуть уменьшить, оставив пропорцию */
             }
         }
     </style>
@@ -413,13 +490,31 @@
     <!-- Навигация -->
     <header>
         <div class="logo">Semyon Tamalincev</div>
-        <nav>
+        <!-- Десктопные ссылки -->
+        <nav class="desktop-nav">
             <a href="#about">Обо мне</a>
             <a href="#works">Работы</a>
             <a href="#reviews">Отзывы</a>
             <a href="#contacts">Контакты</a>
         </nav>
+        <!-- Бургер (показывается только на мобильных) -->
+        <button class="burger-btn" id="burgerBtn" aria-label="Меню">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                <circle cx="16" cy="6" r="3.5"/>
+                <circle cx="16" cy="16" r="3.5"/>
+                <circle cx="16" cy="26" r="3.5"/>
+            </svg>
+        </button>
     </header>
+
+    <!-- Выезжающая мобильная панель -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about" class="mobile-link">Обо мне</a>
+        <a href="#works" class="mobile-link">Работы</a>
+        <a href="#reviews" class="mobile-link">Отзывы</a>
+        <a href="#contacts" class="mobile-link">Контакты</a>
+    </div>
+    <div class="overlay" id="overlay"></div>
 
     <!-- Главный экран -->
     <section class="hero">
@@ -500,6 +595,7 @@
     <footer>© 2026 Semyon Tamalincev</footer>
 
     <script>
+        // Плавное появление секций
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -510,6 +606,34 @@
         }, { threshold: 0.15, rootMargin: "-30px" });
 
         sections.forEach(section => observer.observe(section));
+
+        // Мобильное меню
+        const burgerBtn = document.getElementById('burgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        burgerBtn.addEventListener('click', openMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMenu();
+                // Прокрутка к якорю (сама сработает благодаря href)
+            });
+        });
     </script>
 </body>
 </html>
