@@ -140,7 +140,7 @@
         .mobile-menu {
             position: fixed;
             top: 0;
-            right: -280px;           /* спрятано за экраном */
+            right: -280px;
             width: 280px;
             height: 100vh;
             background: rgba(10, 10, 20, 0.9);
@@ -361,12 +361,6 @@
             font-size: 0.95rem;
             color: #ccc;
         }
-        .reviews-placeholder {
-            padding: 40px 0;
-            text-align: center;
-            color: #888;
-            font-style: italic;
-        }
 
         /* Контакты */
         .contact-link {
@@ -390,14 +384,12 @@
 
         /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ===== */
         @media (max-width: 768px) {
-            /* Плашка */
             header {
                 padding: 12px 20px;
             }
             .logo {
                 font-size: 1.1rem;
             }
-            /* Прячем десктопную навигацию, показываем бургер */
             nav.desktop-nav {
                 display: none;
             }
@@ -427,22 +419,21 @@
                 margin-bottom: 30px;
             }
 
-            /* Обо мне – левое выравнивание, аватарка слева */
+            /* Обо мне – обтекание фото текстом */
             .about-content {
-                flex-direction: row;
-                flex-wrap: nowrap;
-                align-items: flex-start;
-                gap: 20px;
-                text-align: left;
+                display: block;
+                overflow: hidden;
             }
             .avatar {
+                float: left;
                 width: 90px;
                 height: 90px;
-                margin: 0;
+                margin-right: 16px;
+                margin-bottom: 8px;
             }
             .about-text {
-                font-size: 0.95rem;
                 text-align: left;
+                font-size: 0.95rem;
             }
 
             /* Сетки видео и отзывов – уменьшаем карточки */
@@ -468,9 +459,6 @@
             .review-card p {
                 font-size: 0.85rem;
                 padding: 10px 14px;
-            }
-            .video-card .player-wrapper {
-                /* можно чуть уменьшить, оставив пропорцию */
             }
         }
     </style>
@@ -631,7 +619,6 @@
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 closeMenu();
-                // Прокрутка к якорю (сама сработает благодаря href)
             });
         });
     </script>
