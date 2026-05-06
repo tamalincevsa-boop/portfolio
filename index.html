@@ -5,22 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semyon Tamalincev — Видеомонтаж</title>
     <style>
-        /* ===== НОВОЕ: ФОНОВАЯ СЕТКА + ВИНЬЕТКА ===== */
+        /* ===== ФОНОВАЯ СЕТКА + ВИНЬЕТКА ===== */
         .bg-grid-vignette {
             position: fixed;
             inset: 0;
-            z-index: 0;            /* выше блобов (z-index: -1), ниже контента */
-            pointer-events: none;  /* не мешает кликам */
+            z-index: 0;
+            pointer-events: none;
             background:
-                /* Виньетка: прозрачный центр, тёмные края */
                 radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.25) 100%),
-                /* Горизонтальные линии сетки */
                 repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
-                /* Вертикальные линии сетки */
                 repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
         }
 
-        /* Остальные стили (без изменений, перенесены для цельности) */
         :root {
             --accent: #f5a623;
             --accent2: #f093fb;
@@ -334,6 +330,72 @@
             color: #555;
             font-size: 0.9rem;
         }
+
+        /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ===== */
+        @media (max-width: 768px) {
+            /* Плашка */
+            header {
+                padding: 12px 20px;
+            }
+            .logo {
+                font-size: 1.1rem;
+            }
+            nav a {
+                margin-left: 16px;
+                font-size: 0.8rem;
+            }
+
+            /* Hero */
+            .hero h1 {
+                font-size: clamp(2rem, 10vw, 3.5rem);
+            }
+            .subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 32px;
+            }
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            /* Секции */
+            .section {
+                padding: 60px 20px;
+            }
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+
+            /* Обо мне */
+            .about-content {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+            .avatar {
+                width: 140px;
+                height: 140px;
+                margin: 0 auto;
+            }
+            .about-text {
+                font-size: 1rem;
+            }
+
+            /* Сетки видео и отзывов */
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .video-card p,
+            .review-card p {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -345,7 +407,7 @@
         <div class="blob blob-4"></div>
     </div>
 
-    <!-- НОВОЕ: Сетка + виньетка -->
+    <!-- Сетка + виньетка -->
     <div class="bg-grid-vignette"></div>
 
     <!-- Навигация -->
@@ -421,7 +483,7 @@
             </div>
             <div class="review-card">
                 <img src="3.jpg" alt="Отзыв 3">
-                <p> 4 месяца работали с Эриком, его аккаунт в тик токе и бизнес по продаже обежды заметно вырос за это время</p>
+                <p>4 месяца работали с Эриком, его аккаунт в тик токе и бизнес по продаже обежды заметно вырос за это время</p>
             </div>
         </div>
     </section>
