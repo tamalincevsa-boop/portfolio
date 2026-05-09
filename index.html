@@ -449,16 +449,71 @@
         grid-template-columns: 1fr;
       }
 
+      .works-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 18px;
+      }
+
+      .work-card {
+        width: 100%;
+        max-width: 420px;
+      }
+
       .hero {
-        padding-top: 160px;
+        padding: 130px 20px 60px;
+        min-height: auto;
+      }
+
+      .hero-container {
+        gap: 40px;
       }
 
       .hero h1 {
-        font-size: 4rem;
+        font-size: clamp(2.3rem, 11vw, 3.4rem);
+        line-height: 0.95;
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-bottom: 28px;
+      }
+
+      .hero-label,
+      .section-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+      }
+
+      .hero-buttons {
+        gap: 12px;
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 18px;
+        font-size: 0.9rem;
+      }
+
+      .stat-card {
+        padding: 22px;
+        border-radius: 22px;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
       }
 
       header {
-        padding: 20px;
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 0.8rem;
       }
 
       nav {
@@ -466,11 +521,89 @@
       }
 
       section {
-        padding: 100px 20px;
+        padding: 80px 20px;
+      }
+
+      .section-title {
+        font-size: clamp(1.9rem, 10vw, 2.8rem);
+        line-height: 1;
+        margin-bottom: 18px;
+      }
+
+      .section-description {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-bottom: 40px;
+      }
+
+      .about-grid {
+        gap: 30px;
+      }
+
+      .avatar {
+        max-width: 220px;
+      }
+
+      .about-text {
+        font-size: 0.92rem;
+      }
+
+      .about-stack {
+        gap: 10px;
+      }
+
+      .stack-item {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+      }
+
+      .process-grid,
+      .reviews-grid {
+        gap: 18px;
+      }
+
+      .process-card,
+      .review-card {
+        border-radius: 22px;
+      }
+
+      .process-card {
+        padding: 22px;
+      }
+
+      .work-content {
+        padding: 18px;
+      }
+
+      .work-title {
+        font-size: 1.05rem;
+      }
+
+      .work-description,
+      .process-text,
+      .review-text {
+        font-size: 0.85rem;
       }
 
       .cta-box {
-        padding: 60px 24px;
+        padding: 42px 20px;
+        border-radius: 28px;
+      }
+
+      .cta h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+        margin-bottom: 18px;
+      }
+
+      .cta p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 28px;
+      }
+
+      footer {
+        padding: 28px 20px;
+        font-size: 0.8rem;
       }
     }
   </style>
