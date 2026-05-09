@@ -1,10 +1,10 @@
 ```html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Semyon Tamalincev — Video Editor</title>
+  <title translate="no">Semyon Tamalincev — Video Editor</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +135,7 @@
     }
 
     .hero h1 {
-      font-size: clamp(4rem, 9vw, 8rem);
+      font-size: clamp(3.2rem, 7vw, 6.2rem);
       line-height: 0.95;
       letter-spacing: -0.07em;
       margin-bottom: 28px;
@@ -143,9 +143,9 @@
     }
 
     .hero p {
-      max-width: 600px;
+      max-width: 520px;
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 0.98rem;
       line-height: 1.8;
       margin-bottom: 40px;
     }
@@ -212,7 +212,7 @@
     }
 
     section {
-      padding: 140px 40px;
+      padding: 110px 40px;
       max-width: 1300px;
       margin: 0 auto;
     }
@@ -226,7 +226,7 @@
     }
 
     .section-title {
-      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-size: clamp(2rem, 4vw, 3.8rem);
       line-height: 1;
       letter-spacing: -0.06em;
       margin-bottom: 24px;
@@ -242,11 +242,13 @@
 
     .works-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
+      grid-template-columns: repeat(2, minmax(0, 420px));
+      justify-content: center;
+      gap: 24px;
     }
 
     .work-card {
+      max-width: 420px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 32px;
@@ -275,7 +277,7 @@
     }
 
     .work-content {
-      padding: 28px;
+      padding: 22px;
     }
 
     .work-tag {
@@ -287,14 +289,15 @@
     }
 
     .work-title {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       margin-bottom: 12px;
       font-weight: 600;
     }
 
     .work-description {
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.6;
+      font-size: 0.92rem;
     }
 
     .about-grid {
@@ -318,8 +321,8 @@
 
     .about-text {
       color: var(--muted);
-      line-height: 1.9;
-      font-size: 1.1rem;
+      line-height: 1.8;
+      font-size: 0.98rem;
     }
 
     .about-stack {
@@ -345,7 +348,7 @@
     }
 
     .process-card {
-      padding: 36px;
+      padding: 28px;
       border-radius: 28px;
       border: 1px solid var(--border);
       background: var(--card);
@@ -358,14 +361,15 @@
     }
 
     .process-title {
-      font-size: 1.4rem;
+      font-size: 1.15rem;
       margin-bottom: 16px;
       font-weight: 600;
     }
 
     .process-text {
       color: var(--muted);
-      line-height: 1.8;
+      line-height: 1.7;
+      font-size: 0.92rem;
     }
 
     .reviews-grid {
@@ -392,12 +396,13 @@
     }
 
     .review-content {
-      padding: 24px;
+      padding: 20px;
     }
 
     .review-text {
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.6;
+      font-size: 0.9rem;
     }
 
     .cta {
@@ -413,7 +418,7 @@
     }
 
     .cta h2 {
-      font-size: clamp(3rem, 6vw, 5rem);
+      font-size: clamp(2.2rem, 5vw, 4rem);
       line-height: 1;
       letter-spacing: -0.06em;
       margin-bottom: 24px;
@@ -470,6 +475,8 @@
   </style>
 </head>
 <body>
+
+<div translate="no">
 
 <div class="noise"></div>
 <div class="gradient"></div>
@@ -761,6 +768,8 @@
 <footer>
   © 2026 Semyon Tamalincev
 </footer>
+
+</div>
 
 </body>
 </html>
