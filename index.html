@@ -242,13 +242,15 @@
 
     .works-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 420px));
+      grid-template-columns: repeat(3, minmax(0, 360px));
       justify-content: center;
-      gap: 24px;
+      align-items: start;
+      gap: 20px;
     }
 
     .work-card {
-      max-width: 420px;
+      width: 100%;
+      max-width: 360px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 32px;
@@ -442,7 +444,6 @@
     @media (max-width: 980px) {
       .hero-container,
       .about-grid,
-      .works-grid,
       .process-grid,
       .reviews-grid {
         grid-template-columns: 1fr;
