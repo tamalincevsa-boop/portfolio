@@ -1,624 +1,767 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semyon Tamalincev — Видеомонтаж</title>
-    <!-- Vercel Web Analytics -->
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <style>
-        /* ===== ФОНОВАЯ СЕТКА + ВИНЬЕТКА ===== */
-        .bg-grid-vignette {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.25) 100%),
-                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
-                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semyon Tamalincev — Video Editor</title>
 
-        :root {
-            --accent: #f5a623;
-            --accent2: #f093fb;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #08090f;
-            color: #fff;
-            line-height: 1.6;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        /* ===== ФОН С ДВИЖУЩИМИСЯ ФИГУРАМИ ===== */
-        .bg-blobs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: #08090f;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            animation: floatBlob 25s infinite alternate ease-in-out;
-        }
-        .blob-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle at 30% 30%, #6c2a6a, #1f1140);
-            top: -10%;
-            left: -5%;
-            animation-duration: 28s;
-        }
-        .blob-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle at 70% 60%, #2a4a6c, #0f1a2f);
-            bottom: -10%;
-            right: -8%;
-            animation-duration: 22s;
-            animation-delay: -5s;
-        }
-        .blob-3 {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle at 50% 40%, #4a2a6c, #150a20);
-            top: 50%;
-            left: 60%;
-            animation-duration: 30s;
-            animation-delay: -10s;
-        }
-        .blob-4 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle at 60% 30%, #2a5a6c, #0a1720);
-            top: 20%;
-            left: 30%;
-            animation-duration: 26s;
-            animation-delay: -15s;
-        }
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(60px, -80px) scale(1.15); }
-            50% { transform: translate(-40px, 50px) scale(0.95); }
-            75% { transform: translate(-70px, -30px) scale(1.05); }
-            100% { transform: translate(30px, 60px) scale(1.1); }
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* ===== ПЛАВАЮЩАЯ ПЛАШКА ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 40px;
-            backdrop-filter: blur(20px);
-            background: rgba(10, 10, 20, 0.65);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            color: #fff;
-        }
-        nav.desktop-nav a {
-            color: #ccc;
-            text-decoration: none;
-            margin-left: 28px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.25s;
-        }
-        nav.desktop-nav a:hover { color: #fff; }
+    :root {
+      --bg: #050505;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: #a1a1aa;
+      --accent: #ffffff;
+    }
 
-        .burger-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            padding: 8px;
-        }
-        .burger-btn svg circle {
-            fill: currentColor;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        /* ===== МОБИЛЬНОЕ МЕНЮ ===== */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 280px;
-            height: 100vh;
-            background: rgba(10, 10, 20, 0.9);
-            backdrop-filter: blur(25px);
-            z-index: 200;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            padding: 80px 30px 30px;
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            transition: color 0.25s;
-        }
-        .mobile-menu a:hover { color: #fff; }
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 150;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s;
-        }
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* ===== HERO ===== */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-            position: relative;
-        }
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 5.5rem);
-            font-weight: 700;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            color: #ffffff;
-            margin-bottom: 16px;
-        }
-        .subtitle {
-            font-size: 1.1rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 48px;
-            max-width: 400px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            border-radius: 40px;
-            font-size: 1rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            border: 1px solid transparent;
-        }
-        .btn-primary {
-            background: #fff;
-            color: #0f0c29;
-            box-shadow: 0 4px 14px rgba(255,255,255,0.25);
-        }
-        .btn-primary:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255,255,255,0.35);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.4);
-            backdrop-filter: blur(10px);
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.12);
-            border-color: rgba(255,255,255,0.8);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255,255,255,0.15);
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+      pointer-events: none;
+      z-index: -2;
+    }
 
-        /* ===== СЕКЦИИ ===== */
-        .section {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 100px 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        h2 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 40px;
-            letter-spacing: -0.5px;
-        }
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        /* Обо мне */
-        .about-content {
-            display: flex;
-            gap: 50px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f6d365, #f093fb);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(240,147,251,0.3);
-            flex-shrink: 0;
-        }
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        .about-text {
-            flex: 1;
-            font-size: 1.15rem;
-            color: #ddd;
-        }
+    .gradient {
+      position: fixed;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(120,119,198,0.16) 0%, rgba(0,0,0,0) 70%);
+      top: -200px;
+      right: -150px;
+      filter: blur(60px);
+      z-index: -1;
+    }
 
-        /* Работы */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        .video-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .video-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
-        }
-        .video-card .player-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 177.78%;
-        }
-        .video-card .player-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .video-card p {
-            padding: 14px;
-            font-size: 0.95rem;
-            color: #ccc;
-        }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,5,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      z-index: 999;
+    }
 
-        /* Отзывы */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        .review-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s;
-        }
-        .review-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.5), 0 0 20px rgba(240,147,251,0.2);
-        }
-        .review-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .review-card p {
-            padding: 14px;
-            font-size: 0.95rem;
-            color: #ccc;
-        }
+    .logo {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
 
-        /* Контакты */
-        .contacts-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: flex-start;
-        }
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 500;
-            transition: color 0.25s;
-        }
-        .contact-link:hover { color: #f093fb; }
+    nav {
+      display: flex;
+      gap: 32px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #555;
-            font-size: 0.9rem;
-        }
+    nav a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
 
-        /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ===== */
-        @media (max-width: 768px) {
-            header {
-                padding: 12px 20px;
-            }
-            .logo {
-                font-size: 1.1rem;
-            }
-            nav.desktop-nav {
-                display: none;
-            }
-            .burger-btn {
-                display: block;
-            }
+    nav a:hover {
+      color: white;
+    }
 
-            .hero h1 {
-                font-size: clamp(2rem, 10vw, 3.5rem);
-            }
-            .subtitle {
-                font-size: 0.95rem;
-                margin-bottom: 32px;
-            }
-            .btn {
-                padding: 12px 24px;
-                font-size: 0.9rem;
-            }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative;
+    }
 
-            .section {
-                padding: 60px 20px;
-            }
-            h2 {
-                font-size: 1.8rem;
-                margin-bottom: 30px;
-            }
+    .hero-container {
+      max-width: 1300px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 80px;
+      align-items: center;
+    }
 
-            .about-content {
-                display: flow-root;
-            }
-            .avatar {
-                float: left;
-                width: 90px;
-                height: 90px;
-                margin-right: 16px;
-                margin-bottom: 8px;
-                margin-top: 12px;
-            }
-            .about-text {
-                text-align: left;
-                font-size: 0.95rem;
-            }
+    .hero-label {
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+      margin-bottom: 28px;
+    }
 
-            .video-grid {
-                max-width: 400px;
-                margin: 0 auto;
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .reviews-grid {
-                max-width: 400px;
-                margin: 0 auto;
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .video-card {
-                border-radius: 16px;
-            }
-            .review-card {
-                border-radius: 16px;
-            }
-            .video-card p,
-            .review-card p {
-                font-size: 0.85rem;
-                padding: 10px 14px;
-            }
-        }
-    </style>
+    .hero h1 {
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      margin-bottom: 28px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.35s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: white;
+      color: black;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-3px);
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    section {
+      padding: 140px 40px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 24px;
+    }
+
+    .section-description {
+      max-width: 700px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 60px;
+      font-size: 1.05rem;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .work-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      overflow: hidden;
+      transition: 0.4s ease;
+      position: relative;
+    }
+
+    .work-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .work-video {
+      position: relative;
+      padding-top: 177.77%;
+      overflow: hidden;
+    }
+
+    .work-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .work-content {
+      padding: 28px;
+    }
+
+    .work-tag {
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.75rem;
+      margin-bottom: 14px;
+    }
+
+    .work-title {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .work-description {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .avatar img {
+      width: 100%;
+      display: block;
+    }
+
+    .about-text {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1.1rem;
+    }
+
+    .about-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .stack-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.92rem;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .process-card {
+      padding: 36px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .process-number {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 18px;
+    }
+
+    .process-title {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .process-text {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: 0.4s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .review-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .review-content {
+      padding: 24px;
+    }
+
+    .review-text {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .cta {
+      text-align: center;
+      padding-bottom: 180px;
+    }
+
+    .cta-box {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      padding: 80px 40px;
+    }
+
+    .cta h2 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 24px;
+    }
+
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 980px) {
+      .hero-container,
+      .about-grid,
+      .works-grid,
+      .process-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 160px;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+      }
+
+      header {
+        padding: 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      section {
+        padding: 100px 20px;
+      }
+
+      .cta-box {
+        padding: 60px 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="bg-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-        <div class="blob blob-4"></div>
+
+<div class="noise"></div>
+<div class="gradient"></div>
+
+<header>
+  <div class="logo">Semyon Tamalincev</div>
+
+  <nav>
+    <a href="#works">Работы</a>
+    <a href="#about">Обо мне</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-container">
+
+    <div>
+      <div class="hero-label">
+        VIDEO EDITOR • MOTION • SHORT-FORM
+      </div>
+
+      <h1>
+        Монтаж,<br>
+        который удерживает<br>
+        внимание.
+      </h1>
+
+      <p>
+        Создаю reels, TikTok и YouTube Shorts для авторов, брендов и digital-проектов.
+        Работаю с динамикой, sound design, pacing и визуальной подачей,
+        чтобы контент выглядел как полноценный медиа-продукт.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#works" class="btn btn-primary">Смотреть работы</a>
+        <a href="#contacts" class="btn btn-secondary">Связаться</a>
+      </div>
     </div>
-    <div class="bg-grid-vignette"></div>
 
-    <header>
-        <div class="logo">Semyon Tamalincev</div>
-        <nav class="desktop-nav">
-            <a href="#about">Обо мне</a>
-            <a href="#works">Работы</a>
-            <a href="#reviews">Отзывы</a>
-            <a href="#contacts">Контакты</a>
-        </nav>
-        <button class="burger-btn" id="burgerBtn" aria-label="Меню">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
-                <circle cx="16" cy="6" r="3.5"/>
-                <circle cx="16" cy="16" r="3.5"/>
-                <circle cx="16" cy="26" r="3.5"/>
-            </svg>
-        </button>
-    </header>
+    <div class="hero-side">
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#about" class="mobile-link">Обо мне</a>
-        <a href="#works" class="mobile-link">Работы</a>
-        <a href="#reviews" class="mobile-link">Отзывы</a>
-        <a href="#contacts" class="mobile-link">Контакты</a>
+      <div class="stat-card">
+        <div class="stat-number">2+</div>
+        <div class="stat-label">
+          Года опыта в short-form монтаже
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">AE + PR</div>
+        <div class="stat-label">
+          Premiere Pro, After Effects, sound design и motion graphics
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">Reels</div>
+        <div class="stat-label">
+          TikTok, YouTube Shorts, подкасты и вертикальный контент
+        </div>
+      </div>
+
     </div>
-    <div class="overlay" id="overlay"></div>
+  </div>
+</section>
 
-    <section class="hero">
-        <h1>Визуал который цепляет</h1>
-        <p class="subtitle">гарантирую улучшение качества вашего контента</p>
-        <div class="hero-buttons">
-            <a href="#about" class="btn btn-primary">Обо мне</a>
-            <a href="#works" class="btn btn-secondary">Мои работы</a>
+<section id="works">
+
+  <div class="section-label">Selected Work</div>
+
+  <h2 class="section-title">
+    Избранные работы
+  </h2>
+
+  <p class="section-description">
+    Подборка проектов с акцентом на динамичный монтаж, удержание внимания,
+    sound design и современную визуальную подачу.
+  </p>
+
+  <div class="works-grid">
+
+    <div class="work-card">
+      <div class="work-video">
+        <iframe src="https://kinescope.io/embed/uBsenb14RBsRU9UM6e92zg" allowfullscreen></iframe>
+      </div>
+
+      <div class="work-content">
+        <div class="work-tag">Education / Reels</div>
+        <div class="work-title">JETMINDS</div>
+        <div class="work-description">
+          Монтаж reels для образовательного проекта.
+          Работа с динамикой, ритмом и удержанием внимания.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="about" class="section">
-        <h2>Обо мне</h2>
-        <div class="about-content">
-            <div class="avatar">
-                <img src="photo_2026-05-04_14-30-12.jpg" alt="аватар">
-            </div>
-            <div class="about-text">
-                <p>Меня зовут Семён - я монтирую вертикальные видео уже 2 года, работаю в связке Premiere Pro + After Effects. Помогаю собрать разрозненный материал в связную историю с помощью хорошего монтажа, я за результат, за который не стыдно и мне, и вам - снизу примеры моих работ</p>
-            </div>
+    <div class="work-card">
+      <div class="work-video">
+        <iframe src="https://kinescope.io/embed/hr6wYHS7fGxpq3inAjPY33" allowfullscreen></iframe>
+      </div>
+
+      <div class="work-content">
+        <div class="work-tag">Podcast / Short-form</div>
+        <div class="work-title">25 КАДР</div>
+        <div class="work-description">
+          Вертикальный контент для подкаст-студии.
+          Акцент на pacing, sound design и вовлечение.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="works" class="section">
-        <h2>Мои работы</h2>
-        <div class="video-grid">
-            <div class="video-card">
-                <div class="player-wrapper">
-                    <iframe src="https://kinescope.io/embed/uBsenb14RBsRU9UM6e92zg" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <p>Ролик для автора канала <br> "JETMINDS | Образование за рубежом"</p>
-            </div>
-            <div class="video-card">
-                <div class="player-wrapper">
-                    <iframe src="https://kinescope.io/embed/hr6wYHS7fGxpq3inAjPY33" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <p>Reels для подкаста студии «25 кадр».</p>
-            </div>
-            <div class="video-card">
-                <div class="player-wrapper">
-                    <iframe src="https://kinescope.io/embed/2167tCA3Yk4NtBToXi1cBX" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <p>Reels из подкаста Михаила Гребенюка</p>
-            </div>
+    <div class="work-card">
+      <div class="work-video">
+        <iframe src="https://kinescope.io/embed/2167tCA3Yk4NtBToXi1cBX" allowfullscreen></iframe>
+      </div>
+
+      <div class="work-content">
+        <div class="work-tag">Business / Podcast</div>
+        <div class="work-title">Михаил Гребенюк</div>
+        <div class="work-description">
+          Монтаж reels из подкаста с фокусом на удержание,
+          динамику и современную подачу.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="reviews" class="section">
-        <h2>Отзывы</h2>
-        <div class="reviews-grid">
-            <div class="review-card">
-                <img src="111.jpg" alt="Отзыв 1">
-                <p>Сделал Андрею 6 reels которые набрали хорошее просмотры о чем он сам сказал в отзыве</p>
-            </div>
-            <div class="review-card">
-                <img src="2.jpg" alt="Отзыв 2">
-                <p>Алекс - специалист в области психологии, изменили подачу и стиль после чего видео стали попадать в рекомендации</p>
-            </div>
-            <div class="review-card">
-                <img src="3.jpg" alt="Отзыв 3">
-                <p>4 месяца работали с Эриком, его аккаунт в тик токе и бизнес по продаже одежды заметно вырос за это время</p>
-            </div>
+  </div>
+</section>
+
+<section id="about">
+
+  <div class="section-label">About</div>
+
+  <h2 class="section-title">
+    Работаю с контентом,
+    который должен выделяться.
+  </h2>
+
+  <div class="about-grid">
+
+    <div class="avatar">
+      <img src="photo_2026-05-04_14-30-12.jpg" alt="avatar">
+    </div>
+
+    <div>
+      <div class="about-text">
+        Работаю с reels, TikTok, Shorts и short-form контентом.
+        Помогаю авторам, брендам и digital-проектам создавать видео,
+        которые выглядят современно и удерживают внимание с первых секунд.
+
+        <br><br>
+
+        Использую Premiere Pro, After Effects, sound design и motion graphics,
+        чтобы превращать исходный материал в полноценный визуальный продукт.
+      </div>
+
+      <div class="about-stack">
+        <div class="stack-item">Premiere Pro</div>
+        <div class="stack-item">After Effects</div>
+        <div class="stack-item">Motion Graphics</div>
+        <div class="stack-item">Sound Design</div>
+        <div class="stack-item">TikTok / Reels</div>
+        <div class="stack-item">YouTube Shorts</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+
+  <div class="section-label">Process</div>
+
+  <h2 class="section-title">
+    Как строится работа
+  </h2>
+
+  <div class="process-grid">
+
+    <div class="process-card">
+      <div class="process-number">01</div>
+      <div class="process-title">Анализ контента</div>
+      <div class="process-text">
+        Определяем формат, стиль, pacing и подачу под конкретную платформу.
+      </div>
+    </div>
+
+    <div class="process-card">
+      <div class="process-number">02</div>
+      <div class="process-title">Монтаж под удержание</div>
+      <div class="process-text">
+        Работа с ритмом, переходами, динамикой и структурой ролика.
+      </div>
+    </div>
+
+    <div class="process-card">
+      <div class="process-number">03</div>
+      <div class="process-title">Sound Design</div>
+      <div class="process-text">
+        Добавление атмосферы, звуковых акцентов и эмоционального слоя.
+      </div>
+    </div>
+
+    <div class="process-card">
+      <div class="process-number">04</div>
+      <div class="process-title">Финальный polish</div>
+      <div class="process-text">
+        Цвет, subtitles, motion graphics и финальная адаптация под платформу.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="reviews">
+
+  <div class="section-label">Testimonials</div>
+
+  <h2 class="section-title">
+    Отзывы клиентов
+  </h2>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <img src="111.jpg" alt="review">
+
+      <div class="review-content">
+        <div class="review-text">
+          После изменения монтажа reels начали показывать более стабильные результаты и лучше заходить аудитории.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section id="contacts" class="section">
-        <h2>Контакты</h2>
-        <div class="contacts-wrapper">
-            <a href="http://t.me/Tamalincev" target="_blank" class="contact-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.346-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.138.119.096.152.228.168.319.016.091.036.298.02.468z"/></svg>
-                @Tamalincev
-            </a>
-            <a href="https://vk.com/tamalincev" target="_blank" class="contact-link">
-                <!-- Иконка ВКонтакте -->
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.579 6.855c.14-.465 0-.806-.662-.846h-2.205c-.558 0-.813.295-.953.619 0 0-1.115 2.718-2.695 4.48-.51.513-.743.675-1.021.675-.139 0-.341-.162-.341-.627V6.855c0-.558-.161-.806-.626-.806H9.642c-.348 0-.558.258-.558.504 0 .528.79.65.871 2.138v3.228c0 .707-.127.836-.407.836-.743 0-2.551-2.729-3.624-5.853-.21-.607-.42-.849-.98-.849H2.759c-.627 0-.753.295-.753.619 0 .581.743 3.462 3.462 7.277 1.812 2.601 4.363 4.012 6.684 4.012 1.393 0 1.565-.313 1.565-.853v-1.972c0-.626.133-.751.574-.751.325 0 .882.163 2.183 1.417 1.486 1.486 1.732 2.153 2.567 2.153h2.205c.627 0 .941-.313.76-.931-.197-.615-.905-1.51-1.845-2.569-.509-.601-1.273-1.25-1.504-1.574-.326-.42-.232-.604 0-.978 0 0 2.66-3.75 2.938-5.026z"/></svg>
-                @Tamalincev
-            </a>
+    <div class="review-card">
+      <img src="2.jpg" alt="review">
+
+      <div class="review-content">
+        <div class="review-text">
+          Изменили визуальную подачу и структуру роликов, после чего контент начал чаще попадать в рекомендации.
         </div>
-    </section>
+      </div>
+    </div>
 
-    <footer>© 2026 Semyon Tamalincev</footer>
+    <div class="review-card">
+      <img src="3.jpg" alt="review">
 
-    <script>
-        const sections = document.querySelectorAll('.section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.15, rootMargin: "-30px" });
+      <div class="review-content">
+        <div class="review-text">
+          Долгосрочная работа над short-form контентом помогла усилить визуальную часть бренда и рост аккаунта.
+        </div>
+      </div>
+    </div>
 
-        sections.forEach(section => observer.observe(section));
+  </div>
+</section>
 
-        const burgerBtn = document.getElementById('burgerBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const overlay = document.getElementById('overlay');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+<section class="cta" id="contacts">
 
-        function openMenu() {
-            mobileMenu.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+  <div class="cta-box">
 
-        function closeMenu() {
-            mobileMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+    <div class="section-label">Contact</div>
 
-        burgerBtn.addEventListener('click', openMenu);
-        overlay.addEventListener('click', closeMenu);
+    <h2>
+      Готов обсудить
+      ваш проект
+    </h2>
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMenu();
-            });
-        });
-    </script>
+    <p>
+      Reels, TikTok, Shorts, подкасты и short-form контент
+      для авторов, брендов и digital-проектов.
+    </p>
+
+    <div class="hero-buttons" style="justify-content:center;">
+      <a href="https://t.me/Tamalincev" class="btn btn-primary" target="_blank">
+        Telegram
+      </a>
+
+      <a href="https://vk.com/tamalincev" class="btn btn-secondary" target="_blank">
+        VK
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Semyon Tamalincev
+</footer>
+
 </body>
 </html>
+```
