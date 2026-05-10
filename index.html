@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,6 @@
       --text: #ffffff;
       --muted: #a1a1aa;
       --accent: #ffffff;
-      --hover-blue: #3b82f6;
     }
 
     html {
@@ -71,20 +71,18 @@
       z-index: -1;
     }
 
-    /* ---------- HEADER & NAV ---------- */
     header {
       position: fixed;
       top: 0;
       width: 100%;
       padding: 24px 40px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
       backdrop-filter: blur(20px);
       background: rgba(5,5,5,0.55);
       border-bottom: 1px solid rgba(255,255,255,0.05);
       z-index: 999;
-      /* Чтобы абсолютно спозиционировать nav по центру */
-      position: relative;
     }
 
     .logo {
@@ -92,94 +90,24 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      flex-shrink: 0;
     }
 
-    /* Десктопная навигация – по центру */
-    nav.desktop-nav {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+    nav {
       display: flex;
       gap: 32px;
     }
 
-    nav.desktop-nav a {
+    nav a {
       text-decoration: none;
       color: rgba(255,255,255,0.7);
-      font-size: 1.05rem;          /* увеличенный текст */
-      font-weight: 500;
+      font-size: 0.95rem;
       transition: 0.3s;
     }
 
-    nav.desktop-nav a:hover {
+    nav a:hover {
       color: white;
     }
 
-    /* Бургер-кнопка (показывается только на мобильных) */
-    .burger-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      padding: 8px;
-      margin-left: auto;   /* прижмем к правому краю */
-    }
-
-    .burger-btn svg circle {
-      fill: currentColor;
-    }
-
-    /* Мобильное меню */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -280px;
-      width: 280px;
-      height: 100vh;
-      background: rgba(10, 10, 20, 0.95);
-      backdrop-filter: blur(25px);
-      z-index: 1000;
-      transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      padding: 80px 30px 30px;
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-    .mobile-menu a {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 1.2rem;
-      font-weight: 500;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: color 0.25s;
-    }
-
-    .mobile-menu a:hover { color: #fff; }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s;
-    }
-
-    .overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ---------- HERO ---------- */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -235,9 +163,6 @@
       font-weight: 600;
       transition: 0.35s ease;
       border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .btn-primary {
@@ -267,29 +192,18 @@
       gap: 20px;
     }
 
-    /* Карточки статистики – более акцентные */
     .stat-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 28px;
-      padding: 32px;
+      padding: 28px;
       backdrop-filter: blur(20px);
-      transition: all 0.35s ease;
-      cursor: default;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 32px rgba(59, 130, 246, 0.2);
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.15);
     }
 
     .stat-number {
-      font-size: 2.8rem;
-      font-weight: 800;
+      font-size: 2.5rem;
+      font-weight: 700;
       margin-bottom: 10px;
-      letter-spacing: -0.03em;
     }
 
     .stat-label {
@@ -297,7 +211,6 @@
       line-height: 1.6;
     }
 
-    /* ---------- SECTIONS ---------- */
     section {
       padding: 110px 40px;
       max-width: 1300px;
@@ -327,7 +240,6 @@
       font-size: 1.05rem;
     }
 
-    /* Works */
     .works-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 360px));
@@ -390,7 +302,6 @@
       font-size: 0.92rem;
     }
 
-    /* About */
     .about-grid {
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -432,7 +343,6 @@
       font-size: 0.92rem;
     }
 
-    /* Process */
     .process-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -464,7 +374,6 @@
       font-size: 0.92rem;
     }
 
-    /* Reviews */
     .reviews-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -498,47 +407,31 @@
       font-size: 0.9rem;
     }
 
-    /* ---------- CONTACTS (без рамки, с иконками) ---------- */
     .cta {
       text-align: center;
       padding-bottom: 180px;
     }
 
-    .contact-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-top: 40px;
+    .cta-box {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      padding: 80px 40px;
     }
 
-    .btn-contact {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 18px 32px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(20px);
-      color: white;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    .cta h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 24px;
     }
 
-    .btn-contact svg {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    .btn-contact:hover {
-      transform: scale(1.07);
-      border-color: var(--hover-blue);
-      color: var(--hover-blue);
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
 
     footer {
@@ -548,7 +441,6 @@
       border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 980px) {
       .hero-container,
       .about-grid,
@@ -608,12 +500,12 @@
       }
 
       .stat-card {
-        padding: 24px;
+        padding: 22px;
         border-radius: 22px;
       }
 
       .stat-number {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
 
       header {
@@ -624,13 +516,8 @@
         font-size: 0.8rem;
       }
 
-      /* Скрываем десктопное меню, показываем бургер */
-      nav.desktop-nav {
+      nav {
         display: none;
-      }
-
-      .burger-btn {
-        display: block;
       }
 
       section {
@@ -698,14 +585,20 @@
         font-size: 0.85rem;
       }
 
-      .contact-buttons {
-        flex-direction: column;
-        align-items: center;
+      .cta-box {
+        padding: 42px 20px;
+        border-radius: 28px;
       }
 
-      .btn-contact {
-        width: 100%;
-        justify-content: center;
+      .cta h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+        margin-bottom: 18px;
+      }
+
+      .cta p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 28px;
       }
 
       footer {
@@ -722,54 +615,37 @@
 <div class="noise"></div>
 <div class="gradient"></div>
 
-<!-- ---------- HEADER ---------- -->
 <header>
   <div class="logo">Semyon Tamalincev</div>
 
-  <!-- Десктопная навигация (по центру) -->
-  <nav class="desktop-nav">
+  <nav>
     <a href="#works">Работы</a>
     <a href="#about">Обо мне</a>
     <a href="#reviews">Отзывы</a>
     <a href="#contacts">Контакты</a>
   </nav>
-
-  <!-- Бургер -->
-  <button class="burger-btn" id="burgerBtn" aria-label="Меню">
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
-      <circle cx="16" cy="6" r="3.5"/>
-      <circle cx="16" cy="16" r="3.5"/>
-      <circle cx="16" cy="26" r="3.5"/>
-    </svg>
-  </button>
 </header>
 
-<!-- Мобильное меню -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#works" class="mobile-link">Работы</a>
-  <a href="#about" class="mobile-link">Обо мне</a>
-  <a href="#reviews" class="mobile-link">Отзывы</a>
-  <a href="#contacts" class="mobile-link">Контакты</a>
-</div>
-<div class="overlay" id="overlay"></div>
-
-<!-- ---------- HERO ---------- -->
 <section class="hero">
   <div class="hero-container">
+
     <div>
       <div class="hero-label">
         VIDEO EDITOR • MOTION • SHORT-FORM
       </div>
+
       <h1>
         Монтаж,<br>
         который удерживает<br>
         внимание.
       </h1>
+
       <p>
         Создаю reels, TikTok и YouTube Shorts для авторов, брендов и digital-проектов.
         Работаю с динамикой, sound design, pacing и визуальной подачей,
         чтобы контент выглядел как полноценный медиа-продукт.
       </p>
+
       <div class="hero-buttons">
         <a href="#works" class="btn btn-primary">Смотреть работы</a>
         <a href="#contacts" class="btn btn-secondary">Связаться</a>
@@ -777,44 +653,52 @@
     </div>
 
     <div class="hero-side">
+
       <div class="stat-card">
         <div class="stat-number">2+</div>
         <div class="stat-label">
           Года опыта в short-form монтаже
         </div>
       </div>
+
       <div class="stat-card">
         <div class="stat-number">AE + PR</div>
         <div class="stat-label">
           Premiere Pro, After Effects, sound design и motion graphics
         </div>
       </div>
+
       <div class="stat-card">
         <div class="stat-number">Reels</div>
         <div class="stat-label">
           TikTok, YouTube Shorts, подкасты и вертикальный контент
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ---------- WORKS ---------- -->
 <section id="works">
+
   <div class="section-label">Selected Work</div>
+
   <h2 class="section-title">
     Избранные работы
   </h2>
+
   <p class="section-description">
     Подборка проектов с акцентом на динамичный монтаж, удержание внимания,
     sound design и современную визуальную подачу.
   </p>
 
   <div class="works-grid">
+
     <div class="work-card">
       <div class="work-video">
         <iframe src="https://kinescope.io/embed/uBsenb14RBsRU9UM6e92zg" allowfullscreen></iframe>
       </div>
+
       <div class="work-content">
         <div class="work-tag">Education / Reels</div>
         <div class="work-title">JETMINDS</div>
@@ -829,6 +713,7 @@
       <div class="work-video">
         <iframe src="https://kinescope.io/embed/hr6wYHS7fGxpq3inAjPY33" allowfullscreen></iframe>
       </div>
+
       <div class="work-content">
         <div class="work-tag">Podcast / Short-form</div>
         <div class="work-title">25 КАДР</div>
@@ -843,6 +728,7 @@
       <div class="work-video">
         <iframe src="https://kinescope.io/embed/2167tCA3Yk4NtBToXi1cBX" allowfullscreen></iframe>
       </div>
+
       <div class="work-content">
         <div class="work-tag">Business / Podcast</div>
         <div class="work-title">Михаил Гребенюк</div>
@@ -852,17 +738,21 @@
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ---------- ABOUT ---------- -->
 <section id="about">
+
   <div class="section-label">About</div>
+
   <h2 class="section-title">
-    Работаю с контентом,<br>который должен выделяться.
+    Работаю с контентом,
+    который должен выделяться.
   </h2>
 
   <div class="about-grid">
+
     <div class="avatar">
       <img src="photo_2026-05-04_14-30-12.jpg" alt="avatar">
     </div>
@@ -872,7 +762,9 @@
         Работаю с reels, TikTok, Shorts и short-form контентом.
         Помогаю авторам, брендам и digital-проектам создавать видео,
         которые выглядят современно и удерживают внимание с первых секунд.
+
         <br><br>
+
         Использую Premiere Pro, After Effects, sound design и motion graphics,
         чтобы превращать исходный материал в полноценный визуальный продукт.
       </div>
@@ -886,17 +778,20 @@
         <div class="stack-item">YouTube Shorts</div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ---------- PROCESS ---------- -->
 <section>
+
   <div class="section-label">Process</div>
+
   <h2 class="section-title">
     Как строится работа
   </h2>
 
   <div class="process-grid">
+
     <div class="process-card">
       <div class="process-number">01</div>
       <div class="process-title">Анализ контента</div>
@@ -904,6 +799,7 @@
         Определяем формат, стиль, pacing и подачу под конкретную платформу.
       </div>
     </div>
+
     <div class="process-card">
       <div class="process-number">02</div>
       <div class="process-title">Монтаж под удержание</div>
@@ -911,6 +807,7 @@
         Работа с ритмом, переходами, динамикой и структурой ролика.
       </div>
     </div>
+
     <div class="process-card">
       <div class="process-number">03</div>
       <div class="process-title">Sound Design</div>
@@ -918,6 +815,7 @@
         Добавление атмосферы, звуковых акцентов и эмоционального слоя.
       </div>
     </div>
+
     <div class="process-card">
       <div class="process-number">04</div>
       <div class="process-title">Финальный polish</div>
@@ -925,67 +823,79 @@
         Цвет, subtitles, motion graphics и финальная адаптация под платформу.
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ---------- REVIEWS ---------- -->
 <section id="reviews">
+
   <div class="section-label">Testimonials</div>
+
   <h2 class="section-title">
     Отзывы клиентов
   </h2>
 
   <div class="reviews-grid">
+
     <div class="review-card">
       <img src="111.jpg" alt="review">
+
       <div class="review-content">
         <div class="review-text">
           После изменения монтажа reels начали показывать более стабильные результаты и лучше заходить аудитории.
         </div>
       </div>
     </div>
+
     <div class="review-card">
       <img src="2.jpg" alt="review">
+
       <div class="review-content">
         <div class="review-text">
           Изменили визуальную подачу и структуру роликов, после чего контент начал чаще попадать в рекомендации.
         </div>
       </div>
     </div>
+
     <div class="review-card">
       <img src="3.jpg" alt="review">
+
       <div class="review-content">
         <div class="review-text">
           Долгосрочная работа над short-form контентом помогла усилить визуальную часть бренда и рост аккаунта.
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- ---------- CONTACTS (без рамки, с иконками) ---------- -->
 <section class="cta" id="contacts">
-  <div class="section-label">Contact</div>
-  <h2>
-    Готов обсудить<br>ваш проект
-  </h2>
-  <p>
-    Reels, TikTok, Shorts, подкасты и short-form контент<br>
-    для авторов, брендов и digital-проектов.
-  </p>
 
-  <div class="contact-buttons">
-    <a href="https://t.me/Tamalincev" target="_blank" class="btn-contact">
-      <!-- иконка Telegram -->
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.346-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.138.119.096.152.228.168.319.016.091.036.298.02.468z"/></svg>
-      Telegram
-    </a>
+  <div class="cta-box">
 
-    <a href="https://vk.com/tamalincev" target="_blank" class="btn-contact">
-      <!-- иконка VK -->
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.579 6.855c.14-.465 0-.806-.662-.846h-2.205c-.558 0-.813.295-.953.619 0 0-1.115 2.718-2.695 4.48-.51.513-.743.675-1.021.675-.139 0-.341-.162-.341-.627V6.855c0-.558-.161-.806-.626-.806H9.642c-.348 0-.558.258-.558.504 0 .528.79.65.871 2.138v3.228c0 .707-.127.836-.407.836-.743 0-2.551-2.729-3.624-5.853-.21-.607-.42-.849-.98-.849H2.759c-.627 0-.753.295-.753.619 0 .581.743 3.462 3.462 7.277 1.812 2.601 4.363 4.012 6.684 4.012 1.393 0 1.565-.313 1.565-.853v-1.972c0-.626.133-.751.574-.751.325 0 .882.163 2.183 1.417 1.486 1.486 1.732 2.153 2.567 2.153h2.205c.627 0 .941-.313.76-.931-.197-.615-.905-1.51-1.845-2.569-.509-.601-1.273-1.25-1.504-1.574-.326-.42-.232-.604 0-.978 0 0 2.66-3.75 2.938-5.026z"/></svg>
-      VK
-    </a>
+    <div class="section-label">Contact</div>
+
+    <h2>
+      Готов обсудить
+      ваш проект
+    </h2>
+
+    <p>
+      Reels, TikTok, Shorts, подкасты и short-form контент
+      для авторов, брендов и digital-проектов.
+    </p>
+
+    <div class="hero-buttons" style="justify-content:center;">
+      <a href="https://t.me/Tamalincev" class="btn btn-primary" target="_blank">
+        Telegram
+      </a>
+
+      <a href="https://vk.com/tamalincev" class="btn btn-secondary" target="_blank">
+        VK
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -994,35 +904,6 @@
 </footer>
 
 </div>
-
-<!-- Скрипт для мобильного меню -->
-<script>
-  const burgerBtn = document.getElementById('burgerBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const overlay = document.getElementById('overlay');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
-
-  function openMenu() {
-    mobileMenu.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  burgerBtn.addEventListener('click', openMenu);
-  overlay.addEventListener('click', closeMenu);
-
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
-    });
-  });
-</script>
 
 </body>
 </html>
