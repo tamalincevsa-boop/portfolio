@@ -1,908 +1,342 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Портфолио видеомонтажёра Семёна Тамалинцева: reels, TikTok, YouTube Shorts, motion design и sound design." />
+  <meta name="theme-color" content="#050505" />
   <title translate="no">Semyon Tamalincev — Video Editor</title>
+  <script>document.documentElement.classList.add("js");</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <link rel="stylesheet" href="styles-1.css">
+  <link rel="stylesheet" href="styles-2.css">
+  <link rel="stylesheet" href="styles-3.css">
+  <link rel="stylesheet" href="styles-4.css">
 
-    :root {
-      --bg: #050505;
-      --card: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
-      --text: #ffffff;
-      --muted: #a1a1aa;
-      --accent: #ffffff;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
-      pointer-events: none;
-      z-index: -2;
-    }
-
-    .noise {
-      position: fixed;
-      inset: 0;
-      opacity: 0.03;
-      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .gradient {
-      position: fixed;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(120,119,198,0.16) 0%, rgba(0,0,0,0) 70%);
-      top: -200px;
-      right: -150px;
-      filter: blur(60px);
-      z-index: -1;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 24px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(20px);
-      background: rgba(5,5,5,0.55);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      z-index: 999;
-    }
-
-    .logo {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    nav {
-      display: flex;
-      gap: 32px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.95rem;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 120px 40px 80px;
-      position: relative;
-    }
-
-    .hero-container {
-      max-width: 1300px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .hero-label {
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.8rem;
-      margin-bottom: 28px;
-    }
-
-    .hero h1 {
-      font-size: clamp(3.2rem, 7vw, 6.2rem);
-      line-height: 0.95;
-      letter-spacing: -0.07em;
-      margin-bottom: 28px;
-      max-width: 900px;
-    }
-
-    .hero p {
-      max-width: 520px;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.8;
-      margin-bottom: 40px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 16px 28px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.35s ease;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: white;
-      color: black;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-    }
-
-    .btn-secondary {
-      border: 1px solid rgba(255,255,255,0.12);
-      color: white;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(20px);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.08);
-      transform: translateY(-3px);
-    }
-
-    .hero-side {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 28px;
-      backdrop-filter: blur(20px);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    section {
-      padding: 110px 40px;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.8rem;
-      margin-bottom: 24px;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3.8rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
-      margin-bottom: 24px;
-    }
-
-    .section-description {
-      max-width: 700px;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 60px;
-      font-size: 1.05rem;
-    }
-
-    .works-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 360px));
-      justify-content: center;
-      align-items: start;
-      gap: 20px;
-    }
-
-    .work-card {
-      width: 100%;
-      max-width: 360px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      overflow: hidden;
-      transition: 0.4s ease;
-      position: relative;
-    }
-
-    .work-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(255,255,255,0.18);
-    }
-
-    .work-video {
-      position: relative;
-      padding-top: 177.77%;
-      overflow: hidden;
-    }
-
-    .work-video iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .work-content {
-      padding: 22px;
-    }
-
-    .work-tag {
-      color: rgba(255,255,255,0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      font-size: 0.75rem;
-      margin-bottom: 14px;
-    }
-
-    .work-title {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .work-description {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.92rem;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .avatar {
-      width: 100%;
-      border-radius: 32px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .avatar img {
-      width: 100%;
-      display: block;
-    }
-
-    .about-text {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 0.98rem;
-    }
-
-    .about-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 32px;
-    }
-
-    .stack-item {
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      padding: 12px 18px;
-      border-radius: 999px;
-      color: rgba(255,255,255,0.8);
-      font-size: 0.92rem;
-    }
-
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .process-card {
-      padding: 28px;
-      border-radius: 28px;
-      border: 1px solid var(--border);
-      background: var(--card);
-    }
-
-    .process-number {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 18px;
-    }
-
-    .process-title {
-      font-size: 1.15rem;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .process-text {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 0.92rem;
-    }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .review-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      overflow: hidden;
-      transition: 0.4s ease;
-    }
-
-    .review-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .review-card img {
-      width: 100%;
-      display: block;
-    }
-
-    .review-content {
-      padding: 20px;
-    }
-
-    .review-text {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.9rem;
-    }
-
-    .cta {
-      text-align: center;
-      padding-bottom: 180px;
-    }
-
-    .cta-box {
-      background: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 40px;
-      padding: 80px 40px;
-    }
-
-    .cta h2 {
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
-      margin-bottom: 24px;
-    }
-
-    .cta p {
-      max-width: 700px;
-      margin: 0 auto 40px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-
-    footer {
-      padding: 40px;
-      text-align: center;
-      color: rgba(255,255,255,0.3);
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    @media (max-width: 980px) {
-      .hero-container,
-      .about-grid,
-      .process-grid,
-      .reviews-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .works-grid {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 18px;
-      }
-
-      .work-card {
-        width: 100%;
-        max-width: 420px;
-      }
-
-      .hero {
-        padding: 130px 20px 60px;
-        min-height: auto;
-      }
-
-      .hero-container {
-        gap: 40px;
-      }
-
-      .hero h1 {
-        font-size: clamp(2.3rem, 11vw, 3.4rem);
-        line-height: 0.95;
-        margin-bottom: 20px;
-      }
-
-      .hero p {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        margin-bottom: 28px;
-      }
-
-      .hero-label,
-      .section-label {
-        font-size: 0.68rem;
-        letter-spacing: 0.18em;
-      }
-
-      .hero-buttons {
-        gap: 12px;
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-        text-align: center;
-        padding: 14px 18px;
-        font-size: 0.9rem;
-      }
-
-      .stat-card {
-        padding: 22px;
-        border-radius: 22px;
-      }
-
-      .stat-number {
-        font-size: 1.8rem;
-      }
-
-      header {
-        padding: 16px 18px;
-      }
-
-      .logo {
-        font-size: 0.8rem;
-      }
-
-      nav {
-        display: none;
-      }
-
-      section {
-        padding: 80px 20px;
-      }
-
-      .section-title {
-        font-size: clamp(1.9rem, 10vw, 2.8rem);
-        line-height: 1;
-        margin-bottom: 18px;
-      }
-
-      .section-description {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        margin-bottom: 40px;
-      }
-
-      .about-grid {
-        gap: 30px;
-      }
-
-      .avatar {
-        max-width: 220px;
-      }
-
-      .about-text {
-        font-size: 0.92rem;
-      }
-
-      .about-stack {
-        gap: 10px;
-      }
-
-      .stack-item {
-        font-size: 0.8rem;
-        padding: 10px 14px;
-      }
-
-      .process-grid,
-      .reviews-grid {
-        gap: 18px;
-      }
-
-      .process-card,
-      .review-card {
-        border-radius: 22px;
-      }
-
-      .process-card {
-        padding: 22px;
-      }
-
-      .work-content {
-        padding: 18px;
-      }
-
-      .work-title {
-        font-size: 1.05rem;
-      }
-
-      .work-description,
-      .process-text,
-      .review-text {
-        font-size: 0.85rem;
-      }
-
-      .cta-box {
-        padding: 42px 20px;
-        border-radius: 28px;
-      }
-
-      .cta h2 {
-        font-size: clamp(2rem, 10vw, 3rem);
-        margin-bottom: 18px;
-      }
-
-      .cta p {
-        font-size: 0.9rem;
-        line-height: 1.7;
-        margin-bottom: 28px;
-      }
-
-      footer {
-        padding: 28px 20px;
-        font-size: 0.8rem;
-      }
-    }
-  </style>
 </head>
 <body>
 
+<div class="scroll-progress" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+<div class="gradient" aria-hidden="true"></div>
+<div class="gradient-secondary" aria-hidden="true"></div>
+
 <div translate="no">
+  <header>
+    <a href="#top" class="logo" aria-label="Наверх">Semyon Tamalincev</a>
 
-<div class="noise"></div>
-<div class="gradient"></div>
+    <nav aria-label="Основная навигация">
+      <a href="#works">Работы</a>
+      <a href="#about">Обо мне</a>
+      <a href="#process">Процесс</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo">Semyon Tamalincev</div>
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-container">
+        <div class="hero-copy">
+          <div class="hero-label hero-reveal" style="--hero-delay: 80ms;">
+            VIDEO EDITOR • MOTION • SHORT-FORM
+          </div>
 
-  <nav>
-    <a href="#works">Работы</a>
-    <a href="#about">Обо мне</a>
-    <a href="#reviews">Отзывы</a>
-    <a href="#contacts">Контакты</a>
-  </nav>
-</header>
+          <h1 aria-label="Монтаж, который удерживает внимание">
+            <span class="line"><span class="hero-title-line" style="--hero-delay: 150ms;">Монтаж,</span></span>
+            <span class="line"><span class="hero-title-line" style="--hero-delay: 260ms;">который удерживает</span></span>
+            <span class="line"><span class="hero-title-line" style="--hero-delay: 370ms;">внимание.</span></span>
+          </h1>
 
-<section class="hero">
-  <div class="hero-container">
+          <p class="hero-reveal" style="--hero-delay: 480ms;">
+            Создаю reels, TikTok и YouTube Shorts для авторов, брендов и digital-проектов.
+            Работаю с динамикой, sound design, pacing и визуальной подачей,
+            чтобы контент выглядел как полноценный медиа-продукт.
+          </p>
 
-    <div>
-      <div class="hero-label">
-        VIDEO EDITOR • MOTION • SHORT-FORM
+          <div class="hero-buttons hero-reveal" style="--hero-delay: 590ms;">
+            <a href="#works" class="btn btn-primary">Смотреть работы <span aria-hidden="true">↓</span></a>
+            <a href="#contacts" class="btn btn-secondary">Связаться <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="hero-side hero-reveal" style="--hero-delay: 700ms;">
+          <div class="floating-chip">Edit • Rhythm • Sound</div>
+
+          <div class="stat-card">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Года опыта в short-form монтаже</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number">AE + PR</div>
+            <div class="stat-label">Premiere Pro, After Effects, sound design и motion graphics</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number">Reels</div>
+            <div class="stat-label">TikTok, YouTube Shorts, подкасты и вертикальный контент</div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <h1>
-        Монтаж,<br>
-        который удерживает<br>
-        внимание.
-      </h1>
+    <div class="marquee" aria-label="Направления работы">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Video Editing</span><span class="marquee-dot"></span>
+          <span>Motion Design</span><span class="marquee-dot"></span>
+          <span>Sound Design</span><span class="marquee-dot"></span>
+          <span>Storytelling</span><span class="marquee-dot"></span>
+          <span>Short-form</span><span class="marquee-dot"></span>
+          <span>Retention</span><span class="marquee-dot"></span>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span>Video Editing</span><span class="marquee-dot"></span>
+          <span>Motion Design</span><span class="marquee-dot"></span>
+          <span>Sound Design</span><span class="marquee-dot"></span>
+          <span>Storytelling</span><span class="marquee-dot"></span>
+          <span>Short-form</span><span class="marquee-dot"></span>
+          <span>Retention</span><span class="marquee-dot"></span>
+        </div>
+      </div>
+    </div>
 
-      <p>
-        Создаю reels, TikTok и YouTube Shorts для авторов, брендов и digital-проектов.
-        Работаю с динамикой, sound design, pacing и визуальной подачей,
-        чтобы контент выглядел как полноценный медиа-продукт.
+    <section id="works">
+      <div class="section-label" data-reveal>Selected Work</div>
+      <h2 class="section-title" data-reveal style="--delay: 70ms;">Избранные работы</h2>
+      <p class="section-description" data-reveal style="--delay: 140ms;">
+        Подборка проектов с акцентом на динамичный монтаж, удержание внимания,
+        sound design и современную визуальную подачу.
       </p>
 
-      <div class="hero-buttons">
-        <a href="#works" class="btn btn-primary">Смотреть работы</a>
-        <a href="#contacts" class="btn btn-secondary">Связаться</a>
+      <div class="works-grid">
+        <article class="work-card" data-reveal style="--delay: 60ms;">
+          <div class="work-video">
+            <iframe
+              src="https://kinescope.io/embed/uBsenb14RBsRU9UM6e92zg"
+              title="JETMINDS — пример монтажа"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="work-content">
+            <div class="work-tag">Education / Reels</div>
+            <div class="work-title">JETMINDS</div>
+            <div class="work-description">
+              Монтаж reels для образовательного проекта. Работа с динамикой,
+              ритмом и удержанием внимания.
+            </div>
+            <div class="work-meta" aria-label="Выполненные задачи">
+              <span>Editing</span>
+              <span>Motion</span>
+              <span>Retention</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card" data-reveal style="--delay: 140ms;">
+          <div class="work-video">
+            <iframe
+              src="https://kinescope.io/embed/hr6wYHS7fGxpq3inAjPY33"
+              title="25 КАДР — пример монтажа"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="work-content">
+            <div class="work-tag">Podcast / Short-form</div>
+            <div class="work-title">25 КАДР</div>
+            <div class="work-description">
+              Вертикальный контент для подкаст-студии. Акцент на pacing,
+              sound design и вовлечение.
+            </div>
+            <div class="work-meta" aria-label="Выполненные задачи">
+              <span>Pacing</span>
+              <span>Sound</span>
+              <span>Subtitles</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card" data-reveal style="--delay: 220ms;">
+          <div class="work-video">
+            <iframe
+              src="https://kinescope.io/embed/2167tCA3Yk4NtBToXi1cBX"
+              title="Михаил Гребенюк — пример монтажа"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write; screen-wake-lock;"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="work-content">
+            <div class="work-tag">Business / Podcast</div>
+            <div class="work-title">Михаил Гребенюк</div>
+            <div class="work-description">
+              Монтаж reels из подкаста с фокусом на удержание,
+              динамику и современную подачу.
+            </div>
+            <div class="work-meta" aria-label="Выполненные задачи">
+              <span>Story</span>
+              <span>Dynamics</span>
+              <span>Polish</span>
+            </div>
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <div class="hero-side">
+    <section id="about">
+      <div class="section-label" data-reveal>About</div>
+      <h2 class="section-title" data-reveal style="--delay: 70ms;">
+        Работаю с контентом,<br>
+        который должен выделяться.
+      </h2>
 
-      <div class="stat-card">
-        <div class="stat-number">2+</div>
-        <div class="stat-label">
-          Года опыта в short-form монтаже
+      <div class="about-grid">
+        <div class="avatar" data-reveal="left">
+          <img src="photo_2026-05-04_14-30-12.jpg" alt="Семён Тамалинцев — видеомонтажёр" loading="lazy">
+        </div>
+
+        <div data-reveal="right" style="--delay: 100ms;">
+          <div class="about-text">
+            Работаю с reels, TikTok, Shorts и short-form контентом.
+            Помогаю авторам, брендам и digital-проектам создавать видео,
+            которые выглядят современно и удерживают внимание с первых секунд.
+
+            <br><br>
+
+            Использую Premiere Pro, After Effects, sound design и motion graphics,
+            чтобы превращать исходный материал в полноценный визуальный продукт.
+          </div>
+
+          <div class="about-stack">
+            <div class="stack-item">Premiere Pro</div>
+            <div class="stack-item">After Effects</div>
+            <div class="stack-item">Motion Graphics</div>
+            <div class="stack-item">Sound Design</div>
+            <div class="stack-item">TikTok / Reels</div>
+            <div class="stack-item">YouTube Shorts</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="stat-card">
-        <div class="stat-number">AE + PR</div>
-        <div class="stat-label">
-          Premiere Pro, After Effects, sound design и motion graphics
+    <section id="process">
+      <div class="section-label" data-reveal>Process</div>
+      <h2 class="section-title" data-reveal style="--delay: 70ms;">Как строится работа</h2>
+
+      <div class="process-grid">
+        <article class="process-card" data-reveal style="--delay: 50ms;">
+          <div class="process-number">01</div>
+          <div class="process-title">Анализ контента</div>
+          <div class="process-text">
+            Определяем формат, стиль, pacing и подачу под конкретную платформу.
+          </div>
+        </article>
+
+        <article class="process-card" data-reveal style="--delay: 120ms;">
+          <div class="process-number">02</div>
+          <div class="process-title">Монтаж под удержание</div>
+          <div class="process-text">
+            Работа с ритмом, переходами, динамикой и структурой ролика.
+          </div>
+        </article>
+
+        <article class="process-card" data-reveal style="--delay: 190ms;">
+          <div class="process-number">03</div>
+          <div class="process-title">Sound Design</div>
+          <div class="process-text">
+            Добавление атмосферы, звуковых акцентов и эмоционального слоя.
+          </div>
+        </article>
+
+        <article class="process-card" data-reveal style="--delay: 260ms;">
+          <div class="process-number">04</div>
+          <div class="process-title">Финальный polish</div>
+          <div class="process-text">
+            Цвет, subtitles, motion graphics и финальная адаптация под платформу.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="section-label" data-reveal>Testimonials</div>
+      <h2 class="section-title" data-reveal style="--delay: 70ms;">Отзывы клиентов</h2>
+
+      <div class="reviews-grid">
+        <article class="review-card" data-reveal style="--delay: 60ms;">
+          <img src="111.jpg" alt="Отзыв клиента о монтаже" loading="lazy">
+          <div class="review-content">
+            <div class="review-text">
+              После изменения монтажа reels начали показывать более стабильные результаты и лучше заходить аудитории.
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card" data-reveal style="--delay: 140ms;">
+          <img src="2.jpg" alt="Отзыв клиента о визуальной подаче роликов" loading="lazy">
+          <div class="review-content">
+            <div class="review-text">
+              Изменили визуальную подачу и структуру роликов, после чего контент начал чаще попадать в рекомендации.
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card" data-reveal style="--delay: 220ms;">
+          <img src="3.jpg" alt="Отзыв клиента о долгосрочной работе" loading="lazy">
+          <div class="review-content">
+            <div class="review-text">
+              Долгосрочная работа над short-form контентом помогла усилить визуальную часть бренда и рост аккаунта.
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta" id="contacts">
+      <div class="cta-box" data-reveal>
+        <div class="section-label">Contact</div>
+
+        <h2>
+          Готов обсудить<br>
+          ваш проект
+        </h2>
+
+        <p>
+          Reels, TikTok, Shorts, подкасты и short-form контент
+          для авторов, брендов и digital-проектов.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="https://t.me/Tamalincev" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Telegram <span aria-hidden="true">↗</span>
+          </a>
+
+          <a href="https://vk.com/tamalincev" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+            VK <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
+    </section>
+  </main>
 
-      <div class="stat-card">
-        <div class="stat-number">Reels</div>
-        <div class="stat-label">
-          TikTok, YouTube Shorts, подкасты и вертикальный контент
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section id="works">
-
-  <div class="section-label">Selected Work</div>
-
-  <h2 class="section-title">
-    Избранные работы
-  </h2>
-
-  <p class="section-description">
-    Подборка проектов с акцентом на динамичный монтаж, удержание внимания,
-    sound design и современную визуальную подачу.
-  </p>
-
-  <div class="works-grid">
-
-    <div class="work-card">
-      <div class="work-video">
-        <iframe src="https://kinescope.io/embed/uBsenb14RBsRU9UM6e92zg" allowfullscreen></iframe>
-      </div>
-
-      <div class="work-content">
-        <div class="work-tag">Education / Reels</div>
-        <div class="work-title">JETMINDS</div>
-        <div class="work-description">
-          Монтаж reels для образовательного проекта.
-          Работа с динамикой, ритмом и удержанием внимания.
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card">
-      <div class="work-video">
-        <iframe src="https://kinescope.io/embed/hr6wYHS7fGxpq3inAjPY33" allowfullscreen></iframe>
-      </div>
-
-      <div class="work-content">
-        <div class="work-tag">Podcast / Short-form</div>
-        <div class="work-title">25 КАДР</div>
-        <div class="work-description">
-          Вертикальный контент для подкаст-студии.
-          Акцент на pacing, sound design и вовлечение.
-        </div>
-      </div>
-    </div>
-
-    <div class="work-card">
-      <div class="work-video">
-        <iframe src="https://kinescope.io/embed/2167tCA3Yk4NtBToXi1cBX" allowfullscreen></iframe>
-      </div>
-
-      <div class="work-content">
-        <div class="work-tag">Business / Podcast</div>
-        <div class="work-title">Михаил Гребенюк</div>
-        <div class="work-description">
-          Монтаж reels из подкаста с фокусом на удержание,
-          динамику и современную подачу.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="about">
-
-  <div class="section-label">About</div>
-
-  <h2 class="section-title">
-    Работаю с контентом,
-    который должен выделяться.
-  </h2>
-
-  <div class="about-grid">
-
-    <div class="avatar">
-      <img src="photo_2026-05-04_14-30-12.jpg" alt="avatar">
-    </div>
-
-    <div>
-      <div class="about-text">
-        Работаю с reels, TikTok, Shorts и short-form контентом.
-        Помогаю авторам, брендам и digital-проектам создавать видео,
-        которые выглядят современно и удерживают внимание с первых секунд.
-
-        <br><br>
-
-        Использую Premiere Pro, After Effects, sound design и motion graphics,
-        чтобы превращать исходный материал в полноценный визуальный продукт.
-      </div>
-
-      <div class="about-stack">
-        <div class="stack-item">Premiere Pro</div>
-        <div class="stack-item">After Effects</div>
-        <div class="stack-item">Motion Graphics</div>
-        <div class="stack-item">Sound Design</div>
-        <div class="stack-item">TikTok / Reels</div>
-        <div class="stack-item">YouTube Shorts</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section>
-
-  <div class="section-label">Process</div>
-
-  <h2 class="section-title">
-    Как строится работа
-  </h2>
-
-  <div class="process-grid">
-
-    <div class="process-card">
-      <div class="process-number">01</div>
-      <div class="process-title">Анализ контента</div>
-      <div class="process-text">
-        Определяем формат, стиль, pacing и подачу под конкретную платформу.
-      </div>
-    </div>
-
-    <div class="process-card">
-      <div class="process-number">02</div>
-      <div class="process-title">Монтаж под удержание</div>
-      <div class="process-text">
-        Работа с ритмом, переходами, динамикой и структурой ролика.
-      </div>
-    </div>
-
-    <div class="process-card">
-      <div class="process-number">03</div>
-      <div class="process-title">Sound Design</div>
-      <div class="process-text">
-        Добавление атмосферы, звуковых акцентов и эмоционального слоя.
-      </div>
-    </div>
-
-    <div class="process-card">
-      <div class="process-number">04</div>
-      <div class="process-title">Финальный polish</div>
-      <div class="process-text">
-        Цвет, subtitles, motion graphics и финальная адаптация под платформу.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="reviews">
-
-  <div class="section-label">Testimonials</div>
-
-  <h2 class="section-title">
-    Отзывы клиентов
-  </h2>
-
-  <div class="reviews-grid">
-
-    <div class="review-card">
-      <img src="111.jpg" alt="review">
-
-      <div class="review-content">
-        <div class="review-text">
-          После изменения монтажа reels начали показывать более стабильные результаты и лучше заходить аудитории.
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <img src="2.jpg" alt="review">
-
-      <div class="review-content">
-        <div class="review-text">
-          Изменили визуальную подачу и структуру роликов, после чего контент начал чаще попадать в рекомендации.
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <img src="3.jpg" alt="review">
-
-      <div class="review-content">
-        <div class="review-text">
-          Долгосрочная работа над short-form контентом помогла усилить визуальную часть бренда и рост аккаунта.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="cta" id="contacts">
-
-  <div class="cta-box">
-
-    <div class="section-label">Contact</div>
-
-    <h2>
-      Готов обсудить
-      ваш проект
-    </h2>
-
-    <p>
-      Reels, TikTok, Shorts, подкасты и short-form контент
-      для авторов, брендов и digital-проектов.
-    </p>
-
-    <div class="hero-buttons" style="justify-content:center;">
-      <a href="https://t.me/Tamalincev" class="btn btn-primary" target="_blank">
-        Telegram
-      </a>
-
-      <a href="https://vk.com/tamalincev" class="btn btn-secondary" target="_blank">
-        VK
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  © 2026 Semyon Tamalincev
-</footer>
-
+  <footer>
+    © 2026 Semyon Tamalincev
+  </footer>
 </div>
+
+<script src="script.js" defer></script>
 
 </body>
 </html>
