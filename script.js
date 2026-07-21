@@ -1,6 +1,228 @@
   (() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    const refinementStyle = document.createElement('style');
+    refinementStyle.setAttribute('data-portfolio-refinement', 'centered-timeline');
+    refinementStyle.textContent = `/* Centered editing timeline and subtle ambient motion */
+
+@keyframes ambientRevealCentered {
+  to { opacity: var(--ambient-opacity, 0.44); }
+}
+
+@keyframes editingPanelFloatCentered {
+  0% {
+    transform: translate3d(-9px, 7px, 0) rotate(-2.2deg) perspective(1200px) rotateY(-2deg);
+  }
+  100% {
+    transform: translate3d(11px, -9px, 0) rotate(1.1deg) perspective(1200px) rotateY(2deg);
+  }
+}
+
+@keyframes plaqueDriftA {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  42% { translate: 1px -3px; rotate: 0.11deg; }
+  74% { translate: -1px 1px; rotate: -0.06deg; }
+}
+
+@keyframes plaqueDriftB {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  36% { translate: -1px -2px; rotate: -0.09deg; }
+  70% { translate: 1px 2px; rotate: 0.07deg; }
+}
+
+@keyframes plaqueDriftC {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  48% { translate: 2px -2px; rotate: 0.08deg; }
+  78% { translate: -1px 1px; rotate: -0.05deg; }
+}
+
+@keyframes microChipDrift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -1.5px; }
+}
+
+.editing-ambient {
+  --ambient-opacity: 0.44;
+  position: absolute;
+  width: min(96vw, 1520px);
+  height: min(82vh, 820px);
+  aspect-ratio: auto;
+  left: 50%;
+  right: auto;
+  top: 82px;
+  transform: translateX(-50%);
+  opacity: 0;
+  z-index: -2;
+  overflow: visible;
+  contain: layout paint;
+  animation: ambientRevealCentered 1.55s ease forwards 0.42s;
+  -webkit-mask-image: radial-gradient(ellipse 74% 78% at 50% 50%, #000 0 50%, rgba(0, 0, 0, 0.78) 68%, transparent 96%);
+  mask-image: radial-gradient(ellipse 74% 78% at 50% 50%, #000 0 50%, rgba(0, 0, 0, 0.78) 68%, transparent 96%);
+}
+
+.editing-blob {
+  inset: 1% 2%;
+  opacity: 0.76;
+  box-shadow:
+    inset 0 0 120px rgba(255, 255, 255, 0.016),
+    0 0 170px rgba(74, 86, 190, 0.065);
+}
+
+.editing-timeline {
+  width: min(76%, 1140px);
+  left: 50%;
+  top: 51%;
+  translate: -50% -50%;
+  padding: 24px 26px 25px;
+  border-radius: 28px;
+  border-color: rgba(255, 255, 255, 0.07);
+  background: linear-gradient(145deg, rgba(10, 10, 14, 0.43), rgba(12, 12, 17, 0.2));
+  box-shadow: 0 38px 130px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
+  opacity: 0.82;
+  animation: editingPanelFloatCentered 22s var(--ease) infinite alternate;
+}
+
+.timeline-track {
+  height: 34px;
+  border-radius: 9px;
+  padding: 5px;
+  gap: 5px;
+  background-size: 30px 100%;
+}
+
+.timeline-ruler {
+  margin: 17px 0 13px;
+}
+
+.timeline-playhead {
+  top: 50px;
+  bottom: 32px;
+}
+
+.hero-copy,
+.hero-side {
+  position: relative;
+  z-index: 4;
+}
+
+/* Keep the timeline visible around the cards, not through them. */
+.stat-card,
+.stat-card:hover {
+  background: linear-gradient(135deg, rgba(19, 19, 24, 0.91), rgba(10, 10, 14, 0.8));
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.24);
+}
+
+/* Every large plaque moves, but only by a couple of pixels and at a different pace. */
+.hero-side .stat-card:nth-child(2) {
+  animation: plaqueDriftA 10.8s ease-in-out infinite;
+}
+
+.hero-side .stat-card:nth-child(3) {
+  animation: plaqueDriftB 12.4s ease-in-out infinite -4.1s;
+}
+
+.hero-side .stat-card:nth-child(4) {
+  animation: plaqueDriftC 11.6s ease-in-out infinite -7.2s;
+}
+
+.work-card:nth-child(3n + 1),
+.process-card:nth-child(odd),
+.review-card:nth-child(3n + 1) {
+  animation: plaqueDriftA 13.5s ease-in-out infinite -2.8s;
+}
+
+.work-card:nth-child(3n + 2),
+.process-card:nth-child(even),
+.review-card:nth-child(3n + 2),
+.cta-box {
+  animation: plaqueDriftB 14.5s ease-in-out infinite -6.3s;
+}
+
+.work-card:nth-child(3n),
+.review-card:nth-child(3n) {
+  animation: plaqueDriftC 12.8s ease-in-out infinite -8.6s;
+}
+
+.stack-item:nth-child(odd) {
+  animation: microChipDrift 10.5s ease-in-out infinite -3s;
+}
+
+.stack-item:nth-child(even) {
+  animation: microChipDrift 12s ease-in-out infinite -7s reverse;
+}
+
+.stat-card:hover,
+.work-card:hover,
+.process-card:hover,
+.review-card:hover,
+.cta-box:hover,
+.stack-item:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 980px) {
+  .editing-ambient {
+    --ambient-opacity: 0.28;
+    width: 1180px;
+    height: 700px;
+    left: 50%;
+    right: auto;
+    top: 96px;
+    transform: translateX(-50%);
+  }
+
+  .editing-timeline {
+    width: 78%;
+    top: 46%;
+  }
+}
+
+@media (max-width: 560px) {
+  .editing-ambient {
+    --ambient-opacity: 0.18;
+    width: 860px;
+    height: 580px;
+    left: 50%;
+    right: auto;
+    top: 118px;
+    transform: translateX(-50%);
+  }
+
+  .editing-timeline {
+    width: 76%;
+    top: 43%;
+    padding: 18px;
+  }
+
+  .timeline-track {
+    height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editing-ambient,
+  .stat-card,
+  .work-card,
+  .process-card,
+  .review-card,
+  .cta-box,
+  .stack-item {
+    animation: none !important;
+    translate: none !important;
+    rotate: none !important;
+  }
+
+  .editing-ambient {
+    opacity: 0.28 !important;
+  }
+}
+`;
+    document.head.appendChild(refinementStyle);
+
     const ambientMarkup = `
       <div class="editing-ambient" aria-hidden="true">
         <div class="editing-blob"></div>
