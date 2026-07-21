@@ -6,10 +6,84 @@
     }
 
     @keyframes titleEnter {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 0.72em, 0) scale(0.985);
+        filter: blur(9px);
       }
+      58% {
+        opacity: 1;
+        filter: blur(1.5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes editingBlobMorph {
+      0% {
+        border-radius: 42% 58% 62% 38% / 45% 38% 62% 55%;
+        transform: rotate(-4deg) scale(0.96);
+      }
+      50% {
+        border-radius: 58% 42% 38% 62% / 37% 58% 42% 63%;
+        transform: rotate(4deg) scale(1.04);
+      }
+      100% {
+        border-radius: 36% 64% 55% 45% / 61% 42% 58% 39%;
+        transform: rotate(-1deg) scale(1);
+      }
+    }
+
+    @keyframes editingPanelFloat {
+      0% {
+        transform: translate3d(-8px, 8px, 0) rotate(-7deg) perspective(900px) rotateY(-8deg);
+      }
+      100% {
+        transform: translate3d(16px, -18px, 0) rotate(-2deg) perspective(900px) rotateY(5deg);
+      }
+    }
+
+    @keyframes ambientSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.45; transform: scale(0.92); }
+      50% { opacity: 0.9; transform: scale(1.08); }
+    }
+
+    @keyframes clipBreathe {
+      0% { opacity: 0.48; filter: saturate(0.8); }
+      100% { opacity: 0.9; filter: saturate(1.25); }
+    }
+
+    @keyframes waveformMove {
+      0% { transform: scaleY(0.58); opacity: 0.38; }
+      100% { transform: scaleY(1); opacity: 0.78; }
+    }
+
+    @keyframes playheadSweep {
+      0% { left: 16%; opacity: 0.45; }
+      55% { opacity: 1; }
+      100% { left: 82%; opacity: 0.58; }
+    }
+
+    @keyframes statusBlink {
+      0%, 100% { opacity: 0.35; transform: scale(0.82); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    @keyframes orbitDriftA {
+      0% { transform: rotate(24deg) translateX(-8px); }
+      100% { transform: rotate(36deg) translateX(18px); }
+    }
+
+    @keyframes orbitDriftB {
+      0% { transform: rotate(-19deg) translateY(8px); }
+      100% { transform: rotate(-7deg) translateY(-18px); }
     }
 
     @keyframes gradientFloat {
@@ -70,6 +144,22 @@
         max-width: 620px;
       }
 
+      .editing-ambient {
+        width: min(72vw, 620px);
+        right: -24vw;
+        top: 18vh;
+        opacity: 0.42;
+      }
+
+      section[data-section]::after {
+        top: 58px;
+        right: 14px;
+      }
+
+      section[data-section]::before {
+        right: 18px;
+      }
+
       .hero-side::before,
       .floating-chip {
         display: none;
@@ -124,6 +214,12 @@
 
       .hero-buttons {
         gap: 12px;
+      }
+
+      .hero-principles {
+        margin-top: 20px;
+        gap: 14px;
+        font-size: 0.61rem;
       }
 
       .stat-card {
@@ -269,6 +365,27 @@
         height: 450px;
       }
 
+      .editing-ambient {
+        width: 620px;
+        right: -390px;
+        top: 165px;
+        opacity: 0.3;
+      }
+
+      .editing-timeline {
+        width: 62%;
+      }
+
+      section[data-section]::after {
+        font-size: 5.4rem;
+        top: 48px;
+        right: 16px;
+      }
+
+      section[data-section]::before {
+        display: none;
+      }
+
       .marquee-group {
         padding: 15px 10px;
         gap: 22px;
@@ -314,6 +431,296 @@
       .hero-title-line {
         opacity: 1 !important;
         transform: none !important;
+        filter: none !important;
       }
     }
-  
+
+    /* Editorial background and small interface details */
+    .editing-ambient {
+      position: fixed;
+      width: min(48vw, 720px);
+      aspect-ratio: 1;
+      right: -7vw;
+      top: 12vh;
+      pointer-events: none;
+      z-index: -2;
+      opacity: 0;
+      will-change: translate;
+      contain: layout paint;
+      animation: ambientReveal 1.5s ease forwards 0.45s;
+    }
+
+    .editing-blob {
+      position: absolute;
+      inset: 5%;
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      background:
+        radial-gradient(circle at 32% 27%, rgba(136, 132, 255, 0.16), transparent 34%),
+        radial-gradient(circle at 74% 72%, rgba(62, 126, 255, 0.11), transparent 38%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008));
+      border-radius: 42% 58% 62% 38% / 45% 38% 62% 55%;
+      box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.018), 0 0 120px rgba(74, 86, 190, 0.08);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      animation: editingBlobMorph 22s ease-in-out infinite alternate;
+    }
+
+    .editing-blob::before,
+    .editing-blob::after {
+      content: "";
+      position: absolute;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .editing-blob::before {
+      inset: 10%;
+      border: 1px dashed rgba(255, 255, 255, 0.045);
+      animation: ambientSpin 38s linear infinite;
+    }
+
+    .editing-blob::after {
+      inset: 25%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.055), transparent 68%);
+      filter: blur(18px);
+      animation: ambientPulse 8s ease-in-out infinite;
+    }
+
+    .editing-timeline {
+      position: absolute;
+      width: 68%;
+      left: 12%;
+      top: 29%;
+      padding: 17px 18px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.095);
+      background: linear-gradient(145deg, rgba(11, 11, 14, 0.74), rgba(13, 13, 17, 0.38));
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transform-origin: 50% 50%;
+      animation: editingPanelFloat 18s var(--ease) infinite alternate;
+      overflow: hidden;
+    }
+
+    .timeline-topbar,
+    .timeline-ruler,
+    .timeline-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.54rem;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.36);
+      text-transform: uppercase;
+    }
+
+    .ambient-timecode {
+      color: rgba(255, 255, 255, 0.72);
+      letter-spacing: 0.11em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timeline-ruler {
+      margin: 13px 0 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.065);
+      color: rgba(255, 255, 255, 0.23);
+    }
+
+    .timeline-tracks {
+      display: grid;
+      gap: 7px;
+      position: relative;
+    }
+
+    .timeline-track {
+      height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px), rgba(255, 255, 255, 0.018);
+      background-size: 22px 100%;
+      border: 1px solid rgba(255, 255, 255, 0.045);
+      padding: 4px;
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      overflow: hidden;
+    }
+
+    .timeline-clip {
+      display: block;
+      min-width: 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(90deg, rgba(138, 135, 255, 0.27), rgba(83, 128, 255, 0.15));
+      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.035);
+      animation: clipBreathe 9s ease-in-out infinite alternate;
+    }
+
+    .clip-a { flex: 1.25; }
+    .clip-b { flex: 0.8; animation-delay: -2s; }
+    .clip-c { flex: 1.55; animation-delay: -4s; }
+    .clip-d { flex: 1.8; background: linear-gradient(90deg, rgba(255,255,255,.11), rgba(138,135,255,.16)); animation-delay: -1s; }
+    .clip-e { flex: 1.05; background: linear-gradient(90deg, rgba(78,141,255,.18), rgba(255,255,255,.08)); animation-delay: -5s; }
+
+    .track-audio {
+      align-items: center;
+      gap: 3px;
+      padding-inline: 7px;
+      background: rgba(255, 255, 255, 0.012);
+    }
+
+    .wave-bar {
+      flex: 1;
+      height: calc(5px + (var(--wave) * 13px));
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      transform-origin: center;
+      animation: waveformMove 4.8s ease-in-out infinite alternate;
+      animation-delay: calc(var(--wave) * -2s);
+    }
+
+    .timeline-playhead {
+      position: absolute;
+      top: 44px;
+      bottom: 28px;
+      left: 22%;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(126,130,255,.28));
+      box-shadow: 0 0 16px rgba(255,255,255,.28);
+      animation: playheadSweep 16s ease-in-out infinite alternate;
+    }
+
+    .timeline-playhead span {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      left: 50%;
+      top: -2px;
+      transform: translate(-50%, -50%) rotate(45deg);
+      background: rgba(255,255,255,.88);
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(255,255,255,.28);
+    }
+
+    .timeline-status {
+      justify-content: flex-start;
+      gap: 7px;
+      margin-top: 12px;
+      font-size: 0.48rem;
+      color: rgba(255,255,255,.28);
+    }
+
+    .timeline-status i {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(138,135,255,.9);
+      box-shadow: 0 0 12px rgba(138,135,255,.55);
+      animation: statusBlink 2.4s ease-in-out infinite;
+    }
+
+    .editing-orbit {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.055);
+      border-radius: 50%;
+    }
+
+    .editing-orbit-a {
+      width: 77%; height: 34%; left: 5%; top: 37%;
+      animation: orbitDriftA 20s ease-in-out infinite alternate;
+    }
+
+    .editing-orbit-b {
+      width: 46%; height: 82%; right: 3%; top: 8%;
+      animation: orbitDriftB 24s ease-in-out infinite alternate;
+    }
+
+    .hero h1 .line {
+      overflow: visible;
+      padding: 0.08em 0 0.13em;
+      margin: -0.08em 0 -0.13em;
+    }
+
+    .hero-title-line {
+      opacity: 0;
+      transform: translate3d(0, 0.72em, 0) scale(0.985);
+      transform-origin: left bottom;
+      filter: blur(9px);
+      will-change: transform, opacity, filter;
+      animation-name: titleEnter;
+      animation-duration: 1.12s;
+    }
+
+    .hero-principles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      margin-top: 24px;
+      color: rgba(255,255,255,.42);
+      font-size: .68rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .hero-principles span { display: inline-flex; align-items: center; gap: 8px; }
+    .hero-principles i {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 0 10px rgba(255,255,255,.28);
+    }
+
+    section[data-section] { isolation: isolate; }
+
+    section[data-section]::after {
+      content: attr(data-section);
+      position: absolute;
+      top: 54px;
+      right: 22px;
+      z-index: -1;
+      font-size: clamp(5rem, 11vw, 9.5rem);
+      line-height: .8;
+      font-weight: 800;
+      letter-spacing: -.08em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.035);
+      opacity: .9;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    section[data-section]::before {
+      content: "FRAME / " attr(data-section);
+      position: absolute;
+      right: 28px;
+      top: 42px;
+      color: rgba(255,255,255,.18);
+      font-size: .56rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    @keyframes ambientReveal { to { opacity: .62; } }
+
+    @media (max-width: 980px) {
+      .editing-ambient { width: min(72vw, 620px); right: -24vw; top: 18vh; }
+      section[data-section]::after { top: 58px; right: 14px; }
+      section[data-section]::before { right: 18px; }
+      .hero-principles { margin-top: 20px; gap: 14px; font-size: .61rem; }
+      @keyframes ambientReveal { to { opacity: .42; } }
+    }
+
+    @media (max-width: 560px) {
+      .editing-ambient { width: 620px; right: -390px; top: 165px; }
+      .editing-timeline { width: 62%; }
+      section[data-section]::after { font-size: 5.4rem; top: 48px; right: 16px; }
+      section[data-section]::before { display: none; }
+      @keyframes ambientReveal { to { opacity: .3; } }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-title-line { filter: none !important; }
+      .editing-ambient { opacity: .38 !important; }
+    }
