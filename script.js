@@ -2,19 +2,19 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const refinementStyle = document.createElement('style');
-  refinementStyle.setAttribute('data-portfolio-refinement', 'fixed-editorial-timeline');
-  refinementStyle.textContent = `/* Fixed editorial timeline, restored sphere and subtle plaque motion */
+  refinementStyle.setAttribute('data-portfolio-refinement', 'scroll-depth-timeline');
+  refinementStyle.textContent = `/* Scroll-linked editorial timeline and subtle plaque motion */
 
-@keyframes ambientRevealFixed {
-  to { opacity: var(--ambient-opacity, 0.54); }
+@keyframes ambientRevealDepth {
+  to { opacity: var(--ambient-opacity, 0.52); }
 }
 
-@keyframes editingPanelFloatFixed {
+@keyframes editingPanelFloatDepth {
   0% {
-    transform: translate3d(-11px, 9px, 0) rotate(-6.2deg) perspective(1200px) rotateY(-4deg);
+    transform: translate3d(-10px, 8px, 0) rotate(-6.4deg) perspective(1200px) rotateY(-3deg);
   }
   100% {
-    transform: translate3d(13px, -11px, 0) rotate(-3.7deg) perspective(1200px) rotateY(3deg);
+    transform: translate3d(12px, -10px, 0) rotate(-4.1deg) perspective(1200px) rotateY(2.5deg);
   }
 }
 
@@ -42,35 +42,37 @@
 }
 
 .editing-ambient {
-  --ambient-opacity: 0.54;
+  --ambient-opacity: 0.52;
   position: fixed;
-  width: min(112vw, 1760px);
-  height: min(98vh, 1020px);
+  width: min(96vw, 1540px);
+  height: min(92vh, 940px);
   aspect-ratio: auto;
   left: 50%;
   right: auto;
-  top: 50%;
+  top: 46%;
   transform: translate(-50%, -50%);
   opacity: 0;
   z-index: -2;
   overflow: visible;
+  pointer-events: none;
   contain: layout paint;
-  animation: ambientRevealFixed 1.55s ease forwards 0.42s;
-  -webkit-mask-image: radial-gradient(ellipse 86% 88% at 50% 50%, #000 0 62%, rgba(0, 0, 0, 0.92) 75%, transparent 100%);
-  mask-image: radial-gradient(ellipse 86% 88% at 50% 50%, #000 0 62%, rgba(0, 0, 0, 0.92) 75%, transparent 100%);
+  will-change: translate;
+  animation: ambientRevealDepth 1.55s ease forwards 0.42s;
+  -webkit-mask-image: radial-gradient(ellipse 84% 86% at 50% 50%, #000 0 61%, rgba(0, 0, 0, 0.9) 76%, transparent 100%);
+  mask-image: radial-gradient(ellipse 84% 86% at 50% 50%, #000 0 61%, rgba(0, 0, 0, 0.9) 76%, transparent 100%);
 }
 
 .editing-blob {
-  inset: 0.5% 1.5%;
-  opacity: 0.94;
-  border-color: rgba(255, 255, 255, 0.082);
+  inset: 1.5% 4%;
+  opacity: 0.93;
+  border-color: rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(circle at 31% 27%, rgba(136, 132, 255, 0.205), transparent 35%),
-    radial-gradient(circle at 73% 71%, rgba(62, 126, 255, 0.145), transparent 40%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.043), rgba(255, 255, 255, 0.009));
+    radial-gradient(circle at 31% 27%, rgba(136, 132, 255, 0.195), transparent 35%),
+    radial-gradient(circle at 73% 71%, rgba(62, 126, 255, 0.135), transparent 40%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.009));
   box-shadow:
-    inset 0 0 145px rgba(255, 255, 255, 0.022),
-    0 0 190px rgba(74, 86, 190, 0.09);
+    inset 0 0 140px rgba(255, 255, 255, 0.02),
+    0 0 185px rgba(74, 86, 190, 0.085);
 }
 
 .editing-blob::before {
@@ -78,23 +80,23 @@
 }
 
 .editing-blob::after {
-  opacity: 0.95;
+  opacity: 0.92;
 }
 
 .editing-timeline {
-  width: min(88%, 1420px);
+  width: min(72%, 1080px);
   left: 50%;
-  top: 50%;
+  top: 49%;
   translate: -50% -50%;
   padding: 25px 28px 27px;
-  border-radius: 29px;
+  border-radius: 28px;
   border-color: rgba(255, 255, 255, 0.09);
-  background: linear-gradient(145deg, rgba(10, 10, 14, 0.56), rgba(12, 12, 17, 0.29));
-  box-shadow: 0 42px 150px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, rgba(10, 10, 14, 0.58), rgba(12, 12, 17, 0.31));
+  box-shadow: 0 40px 140px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(13px);
   -webkit-backdrop-filter: blur(13px);
-  opacity: 0.9;
-  animation: editingPanelFloatFixed 21s var(--ease) infinite alternate;
+  opacity: 0.89;
+  animation: editingPanelFloatDepth 21s var(--ease) infinite alternate;
 }
 
 .timeline-track {
@@ -102,7 +104,7 @@
   border-radius: 9px;
   padding: 5px;
   gap: 5px;
-  background-size: 32px 100%;
+  background-size: 31px 100%;
 }
 
 .timeline-ruler {
@@ -127,7 +129,6 @@ footer {
   z-index: 2;
 }
 
-/* The background stays visible around cards, not through their text. */
 .stat-card,
 .stat-card:hover {
   background: linear-gradient(135deg, rgba(18, 18, 23, 0.91), rgba(9, 9, 13, 0.82));
@@ -136,18 +137,9 @@ footer {
   box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
 }
 
-/* Every plaque moves only a few pixels, each on its own cycle. */
-.hero-side .stat-card:nth-child(2) {
-  animation: plaqueDriftA 10.8s ease-in-out infinite;
-}
-
-.hero-side .stat-card:nth-child(3) {
-  animation: plaqueDriftB 12.4s ease-in-out infinite -4.1s;
-}
-
-.hero-side .stat-card:nth-child(4) {
-  animation: plaqueDriftC 11.6s ease-in-out infinite -7.2s;
-}
+.hero-side .stat-card:nth-child(2) { animation: plaqueDriftA 10.8s ease-in-out infinite; }
+.hero-side .stat-card:nth-child(3) { animation: plaqueDriftB 12.4s ease-in-out infinite -4.1s; }
+.hero-side .stat-card:nth-child(4) { animation: plaqueDriftC 11.6s ease-in-out infinite -7.2s; }
 
 .work-card:nth-child(3n + 1),
 .process-card:nth-child(odd),
@@ -167,13 +159,8 @@ footer {
   animation: plaqueDriftC 12.8s ease-in-out infinite -8.6s;
 }
 
-.stack-item:nth-child(odd) {
-  animation: microChipDrift 10.5s ease-in-out infinite -3s;
-}
-
-.stack-item:nth-child(even) {
-  animation: microChipDrift 12s ease-in-out infinite -7s reverse;
-}
+.stack-item:nth-child(odd) { animation: microChipDrift 10.5s ease-in-out infinite -3s; }
+.stack-item:nth-child(even) { animation: microChipDrift 12s ease-in-out infinite -7s reverse; }
 
 .stat-card:hover,
 .work-card:hover,
@@ -186,31 +173,27 @@ footer {
 
 @media (max-width: 980px) {
   .editing-ambient {
-    --ambient-opacity: 0.4;
-    width: 1320px;
-    height: 800px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    --ambient-opacity: 0.38;
+    width: 1120px;
+    height: 760px;
+    top: 44%;
   }
 
   .editing-timeline {
-    width: 84%;
+    width: 70%;
   }
 }
 
 @media (max-width: 560px) {
   .editing-ambient {
-    --ambient-opacity: 0.28;
-    width: 920px;
-    height: 650px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    --ambient-opacity: 0.26;
+    width: 820px;
+    height: 590px;
+    top: 41%;
   }
 
   .editing-timeline {
-    width: 80%;
+    width: 68%;
     padding: 18px;
   }
 
@@ -233,7 +216,7 @@ footer {
   }
 
   .editing-ambient {
-    opacity: 0.38 !important;
+    opacity: 0.36 !important;
   }
 }
 `;
@@ -301,18 +284,32 @@ footer {
 
   const header = document.querySelector('header');
   const progress = document.querySelector('.scroll-progress');
-  const parallaxLayers = document.querySelectorAll('.gradient, .gradient-secondary, .editing-ambient');
+  const ambient = document.querySelector('.editing-ambient');
+  const gradients = document.querySelectorAll('.gradient, .gradient-secondary');
 
-  const updateScrollUI = () => {
+  let targetScrollShift = 0;
+  let currentScrollShift = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let currentPointerX = 0;
+  let currentPointerY = 0;
+  let frameId = 0;
+
+  const updateScrollTargets = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progressValue = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
     header?.classList.toggle('is-scrolled', scrollTop > 24);
     if (progress) progress.style.width = `${progressValue}%`;
+
+    const maxShift = Math.min(window.innerHeight * 0.31, 300);
+    targetScrollShift = -Math.min(scrollTop * 0.11, maxShift);
   };
 
-  updateScrollUI();
-  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  updateScrollTargets();
+  window.addEventListener('scroll', updateScrollTargets, { passive: true });
+  window.addEventListener('resize', updateScrollTargets, { passive: true });
 
   const revealElements = document.querySelectorAll('[data-reveal]');
   if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -329,32 +326,34 @@ footer {
     revealElements.forEach((element) => revealObserver.observe(element));
   }
 
-  if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-    let pointerX = 0;
-    let pointerY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let frameId;
-    const directions = [1, -0.65, 0.28];
+  if (!reduceMotion) {
+    if (window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('pointermove', (event) => {
+        pointerX = (event.clientX / window.innerWidth - 0.5) * 28;
+        pointerY = (event.clientY / window.innerHeight - 0.5) * 28;
+      }, { passive: true });
+    }
 
-    const animateParallax = () => {
-      currentX += (pointerX - currentX) * 0.045;
-      currentY += (pointerY - currentY) * 0.045;
+    const animateDepth = () => {
+      currentScrollShift += (targetScrollShift - currentScrollShift) * 0.055;
+      currentPointerX += (pointerX - currentPointerX) * 0.045;
+      currentPointerY += (pointerY - currentPointerY) * 0.045;
 
-      parallaxLayers.forEach((layer, index) => {
-        const direction = directions[index] ?? 0.24;
-        layer.style.translate = `${currentX * direction}px ${currentY * direction}px`;
+      gradients.forEach((gradient, index) => {
+        const direction = index === 0 ? 1 : -0.65;
+        gradient.style.translate = `${currentPointerX * direction}px ${currentPointerY * direction}px`;
       });
 
-      frameId = requestAnimationFrame(animateParallax);
+      if (ambient) {
+        const ambientX = currentPointerX * 0.25;
+        const ambientY = currentScrollShift + currentPointerY * 0.16;
+        ambient.style.translate = `${ambientX}px ${ambientY}px`;
+      }
+
+      frameId = requestAnimationFrame(animateDepth);
     };
 
-    window.addEventListener('pointermove', (event) => {
-      pointerX = (event.clientX / window.innerWidth - 0.5) * 28;
-      pointerY = (event.clientY / window.innerHeight - 0.5) * 28;
-    }, { passive: true });
-
-    frameId = requestAnimationFrame(animateParallax);
+    frameId = requestAnimationFrame(animateDepth);
     window.addEventListener('pagehide', () => {
       if (frameId) cancelAnimationFrame(frameId);
     }, { once: true });
