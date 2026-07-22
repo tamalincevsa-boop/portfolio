@@ -396,9 +396,10 @@ footer {
     header?.classList.toggle('is-scrolled', scrollTop > 24);
     if (progress) progress.style.width = `${progressValue}%`;
 
+    const pageProgress = scrollHeight > 0 ? Math.min(scrollTop / scrollHeight, 1) : 0;
     const startingOffset = Math.min(window.innerHeight * 0.18, 170);
-    const upwardLimit = Math.min(window.innerHeight * 0.2, 190);
-    targetAmbientY = Math.max(startingOffset - scrollTop * 0.14, -upwardLimit);
+    const endingOffset = -Math.min(window.innerHeight * 0.42, 380);
+    targetAmbientY = startingOffset + (endingOffset - startingOffset) * pageProgress;
   };
 
   updateScrollTargets();
