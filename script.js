@@ -2,8 +2,8 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const refinementStyle = document.createElement('style');
-  refinementStyle.setAttribute('data-portfolio-refinement', 'scroll-depth-timeline');
-  refinementStyle.textContent = `/* Scroll-linked editorial timeline and subtle plaque motion */
+  refinementStyle.setAttribute('data-portfolio-refinement', 'hero-motion-tuning');
+  refinementStyle.textContent = `/* Scroll depth, stronger hero cards and focused CTA */
 
 @keyframes ambientRevealDepth {
   to { opacity: var(--ambient-opacity, 0.52); }
@@ -16,6 +16,24 @@
   100% {
     transform: translate3d(12px, -10px, 0) rotate(-4.1deg) perspective(1200px) rotateY(2.5deg);
   }
+}
+
+@keyframes heroPlaqueDriftA {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  36% { translate: 4px -7px; rotate: 0.42deg; }
+  72% { translate: -3px 3px; rotate: -0.26deg; }
+}
+
+@keyframes heroPlaqueDriftB {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  32% { translate: -5px -5px; rotate: -0.38deg; }
+  68% { translate: 4px 4px; rotate: 0.31deg; }
+}
+
+@keyframes heroPlaqueDriftC {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  43% { translate: 6px -4px; rotate: 0.34deg; }
+  78% { translate: -4px 3px; rotate: -0.24deg; }
 }
 
 @keyframes plaqueDriftA {
@@ -41,6 +59,21 @@
   50% { translate: 0 -1.5px; }
 }
 
+@keyframes ctaFocusPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 14px 44px rgba(125, 116, 255, 0.18),
+      0 0 0 rgba(125, 116, 255, 0);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.16),
+      0 18px 58px rgba(125, 116, 255, 0.3),
+      0 0 34px rgba(125, 116, 255, 0.14);
+  }
+}
+
 .editing-ambient {
   --ambient-opacity: 0.52;
   position: fixed;
@@ -49,7 +82,7 @@
   aspect-ratio: auto;
   left: 50%;
   right: auto;
-  top: 46%;
+  top: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
   z-index: -2;
@@ -129,6 +162,49 @@ footer {
   z-index: 2;
 }
 
+.hero-copy {
+  translate: 0 -22px;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 5.9vw, 5.35rem);
+  line-height: 0.97;
+  max-width: 780px;
+  margin-bottom: 24px;
+}
+
+.hero-copy > p {
+  margin-bottom: 30px;
+}
+
+.hero-copy .hero-buttons {
+  gap: 16px;
+  align-items: center;
+}
+
+.hero-copy .btn-primary {
+  min-height: 60px;
+  padding: 17px 36px;
+  border-color: rgba(255, 255, 255, 0.26);
+  background:
+    radial-gradient(circle at 24% 10%, rgba(139, 129, 255, 0.18), transparent 42%),
+    linear-gradient(135deg, #ffffff, #ecebff);
+  font-size: 1rem;
+  animation: ctaFocusPulse 4.2s ease-in-out infinite;
+}
+
+.hero-copy .btn-primary:hover {
+  animation-play-state: paused;
+  transform: translateY(-5px) scale(1.02);
+}
+
+.hero-copy .btn-secondary {
+  min-height: 56px;
+  padding-inline: 30px;
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.17);
+}
+
 .stat-card,
 .stat-card:hover {
   background: linear-gradient(135deg, rgba(18, 18, 23, 0.91), rgba(9, 9, 13, 0.82));
@@ -137,9 +213,9 @@ footer {
   box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
 }
 
-.hero-side .stat-card:nth-child(2) { animation: plaqueDriftA 10.8s ease-in-out infinite; }
-.hero-side .stat-card:nth-child(3) { animation: plaqueDriftB 12.4s ease-in-out infinite -4.1s; }
-.hero-side .stat-card:nth-child(4) { animation: plaqueDriftC 11.6s ease-in-out infinite -7.2s; }
+.hero-side .stat-card:nth-child(2) { animation: heroPlaqueDriftA 8.8s ease-in-out infinite; }
+.hero-side .stat-card:nth-child(3) { animation: heroPlaqueDriftB 10.2s ease-in-out infinite -3.4s; }
+.hero-side .stat-card:nth-child(4) { animation: heroPlaqueDriftC 9.4s ease-in-out infinite -6.1s; }
 
 .work-card:nth-child(3n + 1),
 .process-card:nth-child(odd),
@@ -176,11 +252,24 @@ footer {
     --ambient-opacity: 0.38;
     width: 1120px;
     height: 760px;
-    top: 44%;
   }
 
   .editing-timeline {
     width: 70%;
+  }
+
+  .hero-copy {
+    translate: none;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.25rem, 10vw, 3.15rem);
+    line-height: 0.98;
+  }
+
+  .hero-copy .btn-primary {
+    min-height: 56px;
+    padding: 16px 30px;
   }
 }
 
@@ -189,7 +278,6 @@ footer {
     --ambient-opacity: 0.26;
     width: 820px;
     height: 590px;
-    top: 41%;
   }
 
   .editing-timeline {
@@ -200,6 +288,10 @@ footer {
   .timeline-track {
     height: 29px;
   }
+
+  .hero h1 {
+    font-size: clamp(2.15rem, 11vw, 3rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -209,7 +301,8 @@ footer {
   .process-card,
   .review-card,
   .cta-box,
-  .stack-item {
+  .stack-item,
+  .hero-copy .btn-primary {
     animation: none !important;
     translate: none !important;
     rotate: none !important;
@@ -287,8 +380,8 @@ footer {
   const ambient = document.querySelector('.editing-ambient');
   const gradients = document.querySelectorAll('.gradient, .gradient-secondary');
 
-  let targetScrollShift = 0;
-  let currentScrollShift = 0;
+  let targetAmbientY = 0;
+  let currentAmbientY = 0;
   let pointerX = 0;
   let pointerY = 0;
   let currentPointerX = 0;
@@ -303,11 +396,13 @@ footer {
     header?.classList.toggle('is-scrolled', scrollTop > 24);
     if (progress) progress.style.width = `${progressValue}%`;
 
-    const maxShift = Math.min(window.innerHeight * 0.31, 300);
-    targetScrollShift = -Math.min(scrollTop * 0.11, maxShift);
+    const startingOffset = Math.min(window.innerHeight * 0.18, 170);
+    const upwardLimit = Math.min(window.innerHeight * 0.2, 190);
+    targetAmbientY = Math.max(startingOffset - scrollTop * 0.14, -upwardLimit);
   };
 
   updateScrollTargets();
+  currentAmbientY = targetAmbientY;
   window.addEventListener('scroll', updateScrollTargets, { passive: true });
   window.addEventListener('resize', updateScrollTargets, { passive: true });
 
@@ -335,7 +430,7 @@ footer {
     }
 
     const animateDepth = () => {
-      currentScrollShift += (targetScrollShift - currentScrollShift) * 0.055;
+      currentAmbientY += (targetAmbientY - currentAmbientY) * 0.06;
       currentPointerX += (pointerX - currentPointerX) * 0.045;
       currentPointerY += (pointerY - currentPointerY) * 0.045;
 
@@ -346,7 +441,7 @@ footer {
 
       if (ambient) {
         const ambientX = currentPointerX * 0.25;
-        const ambientY = currentScrollShift + currentPointerY * 0.16;
+        const ambientY = currentAmbientY + currentPointerY * 0.16;
         ambient.style.translate = `${ambientX}px ${ambientY}px`;
       }
 
@@ -357,5 +452,7 @@ footer {
     window.addEventListener('pagehide', () => {
       if (frameId) cancelAnimationFrame(frameId);
     }, { once: true });
+  } else if (ambient) {
+    ambient.style.translate = '0 0';
   }
 })();
